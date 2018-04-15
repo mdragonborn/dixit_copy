@@ -25,6 +25,12 @@ class Player(models.Model):
             Player.save(newPlayer)
             return newPlayer
 
+    @staticmethod
+    def find_user(username, email):
+        if User.objects.filter(username=username, email=email).exists():
+            return False
+        return True
+
     # @staticmethod
     # def create_admin():
 
