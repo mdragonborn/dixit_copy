@@ -16,10 +16,9 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
-from profiles.views import signup
 
 urlpatterns = [
     path('admin/',   admin.site.urls),
-    path('profile/', include('profiles.urls')),
-    path('signup/', signup, name = 'signup'),
+    path('', include('profiles.urls'))
 ]
+
