@@ -4,6 +4,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 
+class Avatar(models.Model):
+    Image = models.ImageField(upload_to='files/profile_pictures/',
+                              default='files/profile_pictures/default.jpg', null=False)
+    Codename = models.CharField(max_length=100, null=False, unique=True)
+
+
 class Player(models.Model):
     User = models.OneToOneField(User, on_delete=models.CASCADE)
     # IDAvatar = models.ForeignKey('Avatar', on_delete=models.SET_NULL ,null=True) #TODO default
@@ -55,7 +61,7 @@ class Constant(models.Model):
 
 class Color(models.Model):
     # on_delete = ?, on_update = ? or None?
-    Constant = models.ForeignKey(Constant)
+    Constant = models.ForeignKey(Constant, on_delete=models.DO_NOTHING)
 
 
 class Expansion(models.Model):
@@ -67,7 +73,7 @@ class Expansion(models.Model):
 
 class Card(models.Model):
     # on_delete = ?, on_update = ? or None?
-    Expansion = models.ForeignKey(Expansion, null=False)
+    Expansion = models.ForeignKey(Expansion, null=False, on_delete=models.DO_NOTHING)
     Image = models.ImageField(upload_to='files/card_pictures/',
                               default='files/card_pictures/default.jpg')
     Codename = models.CharField(max_length=100, null=False, unique=True)
