@@ -8,7 +8,7 @@ class Avatar(models.Model):
     codename = models.CharField(max_length=100, unique=True)
 
 
-DEFAULT_AVATAR = Avatar(image='default.png', codename='default')
+DEFAULT_AVATAR_ID = 1  # TODO: Replace with natural key.
 
 
 class Constant(models.Model):
@@ -22,7 +22,7 @@ class Color(Constant):
 
 class Player(AbstractUser):
     avatar = models.ForeignKey(Avatar, on_delete=models.SET_DEFAULT,
-                               default=DEFAULT_AVATAR)
+                               default=DEFAULT_AVATAR_ID)
     profile_picture = models.ImageField(upload_to='profile_pictures',
                                         default='profile_pictures/default.png')
     is_vip = models.BooleanField(default=False)
