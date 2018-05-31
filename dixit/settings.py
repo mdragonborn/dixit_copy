@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -38,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'profiles.apps.ProfilesConfig',
-
 ]
 
 MIDDLEWARE = [
@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'core.urls'
+ROOT_URLCONF = 'dixit.urls'
 
 TEMPLATES = [
     {
@@ -93,7 +93,7 @@ TEMPLATE_LOADERS = (
 )
 #end setting for templates
 
-WSGI_APPLICATION = 'core.wsgi.application'
+WSGI_APPLICATION = 'dixit.wsgi.application'
 
 
 # Database
