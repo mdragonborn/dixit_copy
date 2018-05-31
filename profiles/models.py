@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser, User
 from django.db import models
 
 
@@ -20,42 +20,14 @@ class Color(Constant):
     pass
 
 
-# TODO: Check if it would be better to inherit from AbstractUser instead.
-class Player(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+class Player(AbstractUser):
     avatar = models.ForeignKey(Avatar, on_delete=models.SET_DEFAULT,
                                default=DEFAULT_AVATAR)
     profile_picture = models.ImageField(upload_to='profile_pictures',
                                         default='profile_pictures/default.png')
     is_vip = models.BooleanField(default=False)
     vip_expiry = models.DateTimeField(null=True)
-
-    @property
-    def is_admin(self):
-        return self.user.is_staff
-
-    # TODO: User creation hooks etc.
-
-    # @staticmethod
-    # def create_user(username, first_name, last_name, email, password):
-    #     if User.objects.filter(username=username, email=email).exists():
-    #         return None
-    #     else:
-    #         player = Player(user=User.objects.create_user(username, email, password))
-    #         player.user.first_name = first_name
-    #         player.user.last_name = last_name
-    #         Player.save(player)
-    #         return player
-    #
-    # @staticmethod
-    # def does_user_exist(username, email):
-    #     if User.objects.filter(username=username, email=email).exists():
-    #         return None
-    #     return User.objects.filter(username=username, email=email)
-    #     # @staticmethod
-    #     # def create_admin():
-    #
-    #     # get_absolute_url ?
+    is_admin = AbstractUser.is_staff
 
 
 class AchievementType(models.Model):
@@ -64,11 +36,12 @@ class AchievementType(models.Model):
 
 
 class Achievement(models.Model):
-    player = models.ForeignKey(Player, on_delete=models.CASCADE,
-                               primary_key=True)
-    achievement_type = models.ForeignKey(AchievementType, on_delete=models.CASCADE,
-                                         primary_key=True)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    achievement_type = models.ForeignKey(AchievementType, on_delete=models.CASCADE)
     value = models.FloatField()
+
+    class Meta:
+        unique_together = ('player', 'achievement_type')
 
 
 class Expansion(models.Model):
@@ -79,7 +52,7 @@ class Expansion(models.Model):
 
 
 class Card(models.Model):
-    expansion = models.ForeignKey(Expansion, on_delete=models.SET_NULL)
+    expansion = models.ForeignKey(Expansion, on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to='cards',
                               default='cards/default.jpg')
     codename = models.CharField(max_length=100, unique=True)
