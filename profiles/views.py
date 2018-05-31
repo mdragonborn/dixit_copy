@@ -6,7 +6,7 @@ from .models import Player
 from .forms import SignUpForm
 
 def profile(request):
-    player = Player.create_user(username="qwe0", email="123@qwe.rt", password="bozidar", firstname="bozidar", lastname="takodje")
+    player = Player.create_user(username="qwe0", email="123@qwe.rt", password="bozidar", first_name="bozidar", last_name="takodje")
     if player is None:
         return HttpResponse("ummmm")
     else:
