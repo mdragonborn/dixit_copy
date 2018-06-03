@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'profiles.apps.ProfilesConfig',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,30 @@ TEMPLATES = [
     },
 ]
 
+#SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
+#TEMPLATE_DIRS = (
+#    os.path.join(SETTINGS_PATH, 'templates'),
+#)
+
+#settings for templates
+#https://stackoverflow.com/questions/15411164/django-templates-folders
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_ROOT, 'templates').replace('\\','/'),
+)
+
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    #     'django.template.loaders.eggs.Loader',
+)
+#end setting for templates
+
 WSGI_APPLICATION = 'dixit.wsgi.application'
 
 
@@ -76,10 +101,16 @@ WSGI_APPLICATION = 'dixit.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dixit',
+        'USER': 'djangomod',
+        'PASSWORD': 'qwe123',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
+
+AUTH_USER_MODEL = 'profiles.Player'
 
 
 # Password validation
