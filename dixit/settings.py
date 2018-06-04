@@ -12,10 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -27,7 +25,6 @@ SECRET_KEY = '$h7sub0kl*9&gq#b0n2-=n(dyha8+_93)7b)(%^!ft1)$9e!=i'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -71,20 +68,20 @@ TEMPLATES = [
     },
 ]
 
-#SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
-#TEMPLATE_DIRS = (
+# SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
+# TEMPLATE_DIRS = (
 #    os.path.join(SETTINGS_PATH, 'templates'),
-#)
+# )
 
-#settings for templates
-#https://stackoverflow.com/questions/15411164/django-templates-folders
+# settings for templates
+# https://stackoverflow.com/questions/15411164/django-templates-folders
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_ROOT, 'templates').replace('\\','/'),
+    os.path.join(PROJECT_ROOT, 'templates').replace('\\', '/'),
 )
 
 # List of callables that know how to import templates from various sources.
@@ -93,10 +90,9 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
     #     'django.template.loaders.eggs.Loader',
 )
-#end setting for templates
+# end setting for templates
 
 WSGI_APPLICATION = 'dixit.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -113,7 +109,6 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = 'profiles.Player'
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
