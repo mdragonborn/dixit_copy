@@ -28,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'webpack_loader'
 ]
 
 MIDDLEWARE = [
@@ -149,6 +149,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+TEST_DIRECT_STATIC = os.path.join(BASE_DIR, 'static')
+
+
+WEBPACK_LOADER = {
+    'DEFAULT' : {
+        'BUNDLE_DIR_NAME' : 'bundles/',
+        'STATS_FILE' : os.path.join(BASE_DIR, 'webpack-stats.json')
+    }
+}
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
