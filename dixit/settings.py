@@ -147,3 +147,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#used for uploading files
+MEDIA_URL = '/media/'
+#specifying folder where to uplaod
+MEDIA_ROOT = os.path.join(BASE_DIR, 'dixit/media')
+#used for loging out, using Djangos implementation
+LOGOUT_REDIRECT_URL = 'home'
+#used for loging ,using Djangos implementation
+LOGIN_REDIRECT_URL = 'home'

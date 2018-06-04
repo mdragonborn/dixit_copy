@@ -1,9 +1,6 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, get_user_model
-from .forms import SignUpForm
-
-#User = get_user_model()
+from django.contrib.auth import login
+from .forms import SignUpForm, ImageForm
 
 
 def home(request):
@@ -20,3 +17,16 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'authenticate/signup.html', {'form': form})
+
+
+def model_form_upload(request):
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = ImageForm()
+    return render(request, 'authenticate/model_form_upload.html', {
+        'form': form
+    })
