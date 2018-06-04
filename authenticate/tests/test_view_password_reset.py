@@ -7,7 +7,7 @@ from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.core import mail
 from django.urls import resolve, reverse
 from django.test import TestCase
-from profiles.models import Player
+from profiles.models import Player, Avatar
 
 class PasswordResetTests(TestCase):
     def setUp(self):

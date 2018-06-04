@@ -32,7 +32,7 @@ urlpatterns = [url(r'^$', auth_views.home, name='home'),
                    dj_auth_views.PasswordResetView.as_view(
                        template_name='authenticate/password_reset.html',
                        email_template_name='authenticate/password_reset_email.html',
-                       subject_template_name='password_reset_subject.txt'
+                       subject_template_name='authenticate/password_reset_subject.txt'
                    ),
                    name='password_reset'),
                url(r'^reset/done/$',

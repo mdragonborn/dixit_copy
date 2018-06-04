@@ -157,7 +157,15 @@ LOGOUT_REDIRECT_URL = 'home'
 #used for loging ,using Djangos implementation
 LOGIN_REDIRECT_URL = 'home'
 
-#used to debug password reset, comment out when in production
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 LOGIN_URL = 'login'
+
+#used to debug password reset, comment out when in production
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'dixit'
+EMAIL_HOST_PASSWORD = '321drowssap'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Dixit Team <noreply@example.com>'
