@@ -16,9 +16,14 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
+from django.conf.urls import url
+
+from authenticate import views as auth_views
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('test/', include('profiles.urls'))
+    url(r'^$', auth_views.home, name='home'),
+    url(r'^signup/$', auth_views.signup, name='signup'),
+    url(r'^admin/', admin.site.urls),
 ]
 
