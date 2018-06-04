@@ -156,3 +156,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'dixit/media')
 LOGOUT_REDIRECT_URL = 'home'
 #used for loging ,using Djangos implementation
 LOGIN_REDIRECT_URL = 'home'
+
+#used to debug password reset, comment out when in production
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+LOGIN_URL = 'login'

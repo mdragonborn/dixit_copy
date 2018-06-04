@@ -9,5 +9,10 @@
         <a href="{% url 'signup' %}">Sign Up</a></br>
         <a href="{% url 'upload' %}">Upload default avatar picture</a></br>
         <p>Poyyy, Home</p>
+        {% if user.is_authenticated %}
+        </br><p>{{ user.username }}</p>
+        {% else %}
+        </br><p>Nisi ulogovan, plakysa</p>
+        {% endif %}
     </body>
 </html>
