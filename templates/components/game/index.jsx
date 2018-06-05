@@ -1,5 +1,6 @@
 import React from 'react';
 import Game from './Game.jsx'
+import Players from './Players.jsx'
 import ReactDOM from 'react-dom'
 import $ from 'jquery'
 
@@ -12,7 +13,7 @@ var current_user = null;
 function render_component(){
     console.log("jpg");
     ReactDOM.render(<Game/>, document.getElementById('game_component'))
+    ReactDOM.render(<Players/>, document.getElementById('players_component'))
 }
-        {/*<LobbyBase current_user={current_user} socket={lobby_sock}/>*/}
 
 render_component();
