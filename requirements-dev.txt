@@ -1,4 +1,4 @@
 django-pdb
-ipdb
+ipdb==0.10
 ipython
 -r requirements.txt
