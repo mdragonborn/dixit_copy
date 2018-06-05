@@ -18,3 +18,10 @@ export const HandGrid = styled.div`
     transform: scale(1.1);
   }
 `;
+
+export const StatusDiv = styled.div`
+  text-align: center;
+  border: 3px solid black;
+  border-radius: 4px;
+  font-size: 2rem;
+`;

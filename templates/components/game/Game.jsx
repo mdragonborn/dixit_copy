@@ -12,6 +12,7 @@ export default class Game extends React.Component {
       c: "starting",
       tableCards: [],
       gameStatus: "PICK_CARD",
+      displayStatus: "Pick a card",
       myCards: [
         {
           "id": 2,
@@ -67,7 +68,8 @@ export default class Game extends React.Component {
     this.setState(((state) => {
       return {
         currentlyPicked: props,
-        gameStatus: "WAITING_FOR_OTHERS"
+        gameStatus: "WAITING_FOR_OTHERS",
+        displayStatus: "Waiting for others..."
       }
     }));
     console.log(this.state);
@@ -88,7 +90,7 @@ export default class Game extends React.Component {
         <Table gameStatus={this.state.gameStatus}
                cards={this.state.tableCards}
                onClickPickedCard={this.onClickPickedCard}/>
-        <StatusBar gameStatus={this.state.gameStatus}
+        <StatusBar gameStatus={this.state.displayStatus}
         />
         <MyHand cards={this.state.myCards}
                 defaultCard={this.state.defaultCard}

@@ -1,8 +1,12 @@
 import React from 'react';
-
+import {StatusDiv} from './styles'
 
 export default class StatusBar extends React.Component {
   render() {
-    return (<h1>Status</h1>);
+    return (
+      <StatusDiv>
+        {this.props.gameStatus || " "}
+      </StatusDiv>
+    );
   }
 }
