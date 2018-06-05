@@ -1,5 +1,5 @@
 import React from 'react';
-// import LobbyBase from './LobbyBase.jsx'
+import Game from './Game.jsx'
 import ReactDOM from 'react-dom'
 import $ from 'jquery'
 
@@ -11,7 +11,7 @@ var current_user = null;
 // renders out the base component
 function render_component(){
     console.log("jpg");
-    ReactDOM.render(<h1>Henlo!</h1>, document.getElementById('game_component'))
+    ReactDOM.render(<Game/>, document.getElementById('game_component'))
 }
         {/*<LobbyBase current_user={current_user} socket={lobby_sock}/>*/}
 

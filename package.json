@@ -33,6 +33,7 @@
     "webpack-dev-server": "^1.15.1"
   },
   "dependencies": {
+    "styled-components": "^3.3.2",
     "webpack-cli": "^3.0.1"
   }
 }
