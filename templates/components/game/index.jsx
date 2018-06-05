@@ -15,5 +15,4 @@ function render_component(){
 }
         {/*<LobbyBase current_user={current_user} socket={lobby_sock}/>*/}
 
-
 render_component();

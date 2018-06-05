@@ -18,8 +18,17 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
-from django.urls import path
+from django.contrib.auth import views as dj_auth_views
+from django.urls import include, path
+from game.views import GameView
+from django.conf.urls import url
+from django.conf.urls.static import static
+from dixit import settings
+from game  import views
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'cards', views.RetrieveImages)
 
 from accounts import views as accounts_views
 from profiles import views as profiles_views

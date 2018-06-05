@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% load render_bundle from webpack_loader %}
 
-
 {% block page_javascript %}
 
     {% render_bundle 'game' %}
 
 {% endblock %}
 
-{% block main_content %}
+
+{% block body %}
+
+
     <h3>Let's play Obstruction, <span class="text-primary" >{{request.user.username}}</span>!</h3>
     <hr>
     <div id="game_component"></div>
