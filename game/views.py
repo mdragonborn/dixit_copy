@@ -4,7 +4,7 @@ from django.contrib.auth import login
 from game.serializers import CardSerializer
 from .forms import SignUpForm, ImageForm
 from django.views.generic import TemplateView
-from profiles.models import Card
+from dixit.models import Card
 from django.http import HttpResponse
 from rest_framework import viewsets
 

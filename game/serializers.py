@@ -1,4 +1,4 @@
-from profiles.models import Card
+from dixit.models import Card
 from rest_framework import serializers
 
 class CardSerializer(serializers.HyperlinkedModelSerializer):

@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from profiles.models import Player, Avatar, Card
+from dixit.models import Player, Avatar, Card
 from django import forms
 
 
