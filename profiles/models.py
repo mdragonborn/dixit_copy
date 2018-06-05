@@ -20,6 +20,18 @@ class Color(Constant):
     pass
 
 
+class AliasField(models.Field):
+    def contribute_to_class(self, cls, name, private_only=False):
+        super().contribute_to_class(cls, name, private_only=True)
+        setattr(cls, name, self)
+
+    def __get__(self, instance, instance_type=None):
+        return getattr(instance, self.db_column)
+
+    def __set__(self, instance, value):
+        setattr(instance, self.db_column, value)
+
+
 class Player(AbstractUser):
     avatar = models.ForeignKey(Avatar, on_delete=models.SET_DEFAULT,
                                default=DEFAULT_AVATAR_ID)
@@ -27,7 +39,7 @@ class Player(AbstractUser):
                                         default='profile_pictures/default.png')
     is_vip = models.BooleanField(default=False)
     vip_expiry = models.DateTimeField(null=True)
-    is_admin = AbstractUser.is_staff
+    is_admin = AliasField(db_column='is_staff')
 
 
 class AchievementType(models.Model):
