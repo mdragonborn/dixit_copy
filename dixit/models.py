@@ -33,7 +33,9 @@ class Player(AbstractUser):
                                         default='profile_pictures/default.png')
     is_vip = models.BooleanField(default=False)
     vip_expiry = models.DateTimeField(null=True)
-    is_admin = AliasField(db_column='is_staff')
+    # Without the default, Django's built-in signup form fails with
+    # ValidationError("'' value must be either True or False.")
+    is_admin = AliasField(db_column='is_staff', default=False)
 
 
 # Achievements
