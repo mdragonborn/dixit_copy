@@ -1,3 +1,4 @@
-ipython
+django-pdb
 ipdb
+ipython
 -r requirements.txt
