@@ -104,13 +104,13 @@ WSGI_APPLICATION = 'dixit.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'dixit',
         'USER': 'djangomod',
         'PASSWORD': 'qwe123',
         'HOST': 'localhost',
         'PORT': '',
-    }
+    },
 }
 
 AUTH_USER_MODEL = 'dixit.Player'
