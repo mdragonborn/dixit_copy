@@ -4,6 +4,27 @@ export const MainLayout = styled.div`
 
 `;
 
+export const TableLayout = styled.div`
+    display: block;
+    height: 30vh;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    
+    img {
+    height: 150px;
+    padding: 10px;
+    transition: all .2s ease-in-out;
+  }
+  
+  img:hover {
+    transform: scale(1.1);
+  }
+  .grow {
+    transform: scale(1.1);
+  }
+`;
+
 export const HandGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;

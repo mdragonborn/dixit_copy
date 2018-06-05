@@ -13,7 +13,10 @@ export default class MyHand extends React.Component {
                         alt={i.codename}
                    />
           ):
-          this.props.gameStatus === "WAITING_FOR_OTHERS"?
+          this.props.gameStatus === "WAITING_FOR_OTHERS"
+          || this.props.gameStatus ==="PICK_FROM_TABLE"
+            || this.props.gameStatus === "WAITING_FOR_RESULTS"
+            ?
             this.props.cards.map(
               i => <img src={ i.id===this.props.currentlyPicked?this.props.defaultCard:i.image }
                         alt={'default'}
