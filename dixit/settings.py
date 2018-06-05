@@ -111,7 +111,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'profiles.Player'
+AUTH_USER_MODEL = 'dixit.Player'
 
 
 # Password validation

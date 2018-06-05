@@ -1,9 +1,8 @@
 from django.http import HttpResponse
-from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
-from .models import Player
-from .forms import SignUpForm
+from dixit.models import Player
+
 
 def profile(request):
     player = Player.create_user(username="qwe0", email="123@qwe.rt", password="bozidar", first_name="bozidar", last_name="takodje")
