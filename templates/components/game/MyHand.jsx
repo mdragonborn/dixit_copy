@@ -6,17 +6,24 @@ export default class MyHand extends React.Component {
     console.log(this.props.cards);
     return (
       <HandGrid>
-        { this.gameStatus === "PICK_CARD" ?
+        { this.props.gameStatus === "PICK_CARD" ?
             this.props.cards.map(
             i => <img src={i.image}
-                        onClick={this.props.onClickPickedCard(i.id)}
+                        onClick={() => this.props.onClickPickedCard(i.id)}
                         alt={i.codename}
                    />
           ):
+          this.props.gameStatus === "WAITING_FOR_OTHERS"?
+            this.props.cards.map(
+              i => <img src={ i.id===this.props.currentlyPicked?this.props.defaultCard:i.image }
+                        alt={'default'}
+                   />
+            )
+            :
           this.props.cards.length === 0 ?
             Array(6).fill(1).map(
               i => <img src = {this.props.defaultCard}
-                        alt="card"
+                        alt="default"
               />
             ):
             this.props.cards.map(

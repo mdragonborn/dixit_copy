@@ -11,7 +11,7 @@ export default class Game extends React.Component {
     this.state = {
       c: "starting",
       tableCards: [],
-      status: "",
+      gameStatus: "PICK_CARD",
       myCards: [
         {
           "id": 2,
@@ -20,41 +20,43 @@ export default class Game extends React.Component {
           "codename": "leja"
         },
         {
-          "id": 2,
+          "id": 3,
           "expansion": null,
           "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
           "codename": "leja"
         },
         {
-          "id": 2,
+          "id": 4,
           "expansion": null,
           "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
           "codename": "leja"
         },
         {
-          "id": 2,
+          "id": 5,
           "expansion": null,
           "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
           "codename": "leja"
         },
         {
-          "id": 2,
+          "id": 6,
           "expansion": null,
           "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
           "codename": "leja"
         },
         {
-          "id": 2,
+          "id": 7,
           "expansion": null,
           "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
           "codename": "leja"
         }
       ],
-      defaultCard: ""
+      currentlyPicked: null,
+      defaultCard: "http://127.0.0.1:8000/media/cards/pic879970.jpg"
     };
 
     this.onClickPickedCard = this.onClickPickedCard.bind(this);
     this.onClickPickMyCard = this.onClickPickMyCard.bind(this);
+    this.handleData = this.handleData.bind(this);
   }
 
   onClickPickedCard(props) {
@@ -62,10 +64,25 @@ export default class Game extends React.Component {
   }
 
   onClickPickMyCard(props) {
+    this.setState(((state) => {
+      return {
+        currentlyPicked: props,
+        gameStatus: "WAITING_FOR_OTHERS"
+      }
+    }));
+    console.log(this.state);
+  }
 
+  handleData(data) {
+    let result = JSON.parse(data);
+    switch(data.messageType){
+      default:
+        return;
+    }
   }
 
   render() {
+    console.log(this.state.gameStatus);
     return (
       <MainLayout>
         <Table gameStatus={this.state.gameStatus}
@@ -77,6 +94,7 @@ export default class Game extends React.Component {
                 defaultCard={this.state.defaultCard}
                 onClickPickedCard={this.onClickPickMyCard}
                 gameStatus={this.state.gameStatus}
+                currentlyPicked = {this.state.currentlyPicked}
         />
       </MainLayout>
     );

@@ -16,7 +16,7 @@ def model_form_upload(request):
             return redirect('/')
     else:
         form = ImageForm()
-    return render(request, './model_form_upload.html', {
+    return render(request, 'cardupload/model_form_upload.html', {
         'form': form
     })
 
