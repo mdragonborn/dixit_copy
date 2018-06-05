@@ -2,23 +2,7 @@ from django.contrib.auth.models import AbstractUser, User
 from django.db import models
 
 
-class Avatar(models.Model):
-    # TODO: Replace placeholder paths.
-    image = models.ImageField(upload_to='avatars')
-    codename = models.CharField(max_length=100, unique=True)
-
-
-DEFAULT_AVATAR_ID = 1  # TODO: Replace with natural key.
-
-
-class Constant(models.Model):
-    name = models.CharField(max_length=255)
-    value = models.FloatField()
-
-
-class Color(Constant):
-    pass
-
+# Custom fields
 
 class AliasField(models.Field):
     def contribute_to_class(self, cls, name, private_only=False):
@@ -32,15 +16,27 @@ class AliasField(models.Field):
         setattr(instance, self.db_column, value)
 
 
+# Players
+
+class Avatar(models.Model):
+    DEFAULT_ID = 1
+
+    # TODO: Replace placeholder paths.
+    image = models.ImageField(upload_to='avatars')
+    codename = models.CharField(max_length=100, unique=True)
+
+
 class Player(AbstractUser):
     avatar = models.ForeignKey(Avatar, on_delete=models.SET_DEFAULT,
-                               default=DEFAULT_AVATAR_ID)
+                               default=Avatar.DEFAULT_ID)
     profile_picture = models.ImageField(upload_to='profile_pictures',
                                         default='profile_pictures/default.png')
     is_vip = models.BooleanField(default=False)
     vip_expiry = models.DateTimeField(null=True)
     is_admin = AliasField(db_column='is_staff')
 
+
+# Achievements
 
 class AchievementType(models.Model):
     name = models.CharField(max_length=255)
@@ -56,6 +52,8 @@ class Achievement(models.Model):
         unique_together = ('player', 'achievement_type')
 
 
+# Cards
+
 class Expansion(models.Model):
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='expansions',
@@ -68,3 +66,14 @@ class Card(models.Model):
     image = models.ImageField(upload_to='cards',
                               default='cards/default.jpg')
     codename = models.CharField(max_length=100, unique=True)
+
+
+# Game settings
+
+class Constant(models.Model):
+    name = models.CharField(max_length=255)
+    value = models.FloatField()
+
+
+class Color(Constant):
+    pass
