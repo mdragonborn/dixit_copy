@@ -6,13 +6,14 @@ export const MainLayout = styled.div`
 
 export const TableLayout = styled.div`
     display: block;
-    height: 30vh;
+    padding: 10vh 0;
     text-align: center;
     align-content: center;
     justify-content: center;
     
     img {
-    height: 150px;
+        max-width: 12vw;
+    max-height: 30vh;
     padding: 10px;
     transition: all .2s ease-in-out;
   }
@@ -55,7 +56,8 @@ export const HandGrid = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   
   img {
-    height: 150px;
+    max-width: 12vw;
+    max-height: 30vh;
     padding: 10px;
     transition: all .2s ease-in-out;
   }
