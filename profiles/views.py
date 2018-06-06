@@ -1,8 +1,8 @@
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def profile(request):
-    if request.user.is_authenticated:
-        return HttpResponse(f"Hi, {request.user.username}!")
-    else:
-        return HttpResponse("Damn kids, get off my lawn!")
+    args = {'user': request.user}
+    return render(request, 'profiles/profile.html', args)
