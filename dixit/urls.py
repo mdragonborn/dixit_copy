@@ -65,5 +65,7 @@ urlpatterns = [
                       name='password_change_done'),
                   url(r'^profile/$', profiles_views.profile, name='profile'),
                   url(r'^profile/edit$', profiles_views.profile_edit,
-                      name='profile_edit')
+                      name='profile_edit'),
+                  url(r'^profile_avatars/$', profiles_views.profile_avatars,
+                      name='profile_avatars')
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -12,5 +12,11 @@ class EditProfileForm(UserChangeForm):
             'last_name',
             'email',
             'password',
-            'profile_picture'
+            'profile_picture',
+            # 'avatar'
         )
+
+    # def __init__(self, *args, **kwargs):
+    #    super().__init__(*args, **kwargs)
+    #    self.fields['avatar'].queryset = Avatar.objects.all()
+

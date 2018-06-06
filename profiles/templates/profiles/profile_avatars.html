@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Profile avatars{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div
+      class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+
+
+      <div class="panel panel-info">
+        <div class="panel-body">
+          <div class="row">
+            <div class = "col-md-2 col-lg-2">
+              &nbsp;
+            </div>
+            <div class=" col-md-8 col-lg-8 ">
+              <table class="table table-user-information">
+                <thead>
+
+                <tr>
+                  <td>Avatar image</td>
+                  <td>Codename</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for avatar in avatars %}
+                <tr>
+                  <td>
+                    <img src="{{avatar.image.url}}"
+                         style="width:64px; 64px;"/>
+                  </td>
+                  <td>
+                    {{ avatar.codename }}
+                  </td>
+
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <div class = "col-md-2 col-lg-2">
+              &nbsp;
+            </div>
+          </div>
+          <div class="row align-items-center justify-content-center">
+            <small>
+              <button onclick="window.history.back();"
+                      class="btn btn-outline-danger">Go
+                back
+              </button>
+            </small>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
