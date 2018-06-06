@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile view{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1>Profile information</h1>
+  <hr>
+  {% block content %}
+    <table class = "table">
+      <div class = "row">
+        <div class = "col-sm-6">
+          <img src = "{{ user.player.avatar.url }}" alt =
+            "profile_picture">
+        </div>
+        <div class = "col-sm-6">
+          Username:
+        </div>
+      </div>
+
+    </table>
+  {% endblock %}
+</div>
+{% endblock body %}
+
