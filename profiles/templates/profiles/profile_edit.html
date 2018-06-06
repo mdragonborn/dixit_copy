@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile edit{% endblock %}
+{% block body %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-lg-8 col-md-10 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Profile info</h3>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {% include 'includes/form.html' %}
+          <button type="submit" class="btn btn-primary btn-block">Submit
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="text-center py-2">
+      <small>
+        <button onclick="window.history.back();"
+                class="btn btn-outline-danger">Go
+          back
+        </button>
+      </small>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% endblock %}

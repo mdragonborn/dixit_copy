@@ -55,13 +55,15 @@ urlpatterns = [
                           template_name='authenticate/password_reset_complete.html'),
                       name='password_reset_complete'),
 
-                  url(r'^settings/password/$',
+                  url(r'^password/$',
                       dj_auth_views.PasswordChangeView.as_view(
                           template_name='authenticate/password_change.html'),
                       name='password_change'),
-                  url(r'^settings/password/done/$',
+                  url(r'^password/done/$',
                       dj_auth_views.PasswordChangeDoneView.as_view(
                           template_name='authenticate/password_change_done.html'),
                       name='password_change_done'),
                   url(r'^profile/$', profiles_views.profile, name='profile'),
+                  url(r'^profile/edit$', profiles_views.profile_edit,
+                      name='profile_edit')
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

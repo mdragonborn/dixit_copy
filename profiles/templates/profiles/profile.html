@@ -1,25 +1,80 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Profile view{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/profile_view.css' %}">
+{% endblock %}
+
 
 {% block body %}
 <div class="container">
-  <h1>Profile information</h1>
-  <hr>
-  {% block content %}
-    <table class = "table">
-      <div class = "row">
-        <div class = "col-sm-6">
-          <img src = "{{ user.player.avatar.url }}" alt =
-            "profile_picture">
-        </div>
-        <div class = "col-sm-6">
-          Username:
-        </div>
-      </div>
+  <div class="row">
+    <div
+      class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
 
-    </table>
-  {% endblock %}
+
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">@{{ user.username }}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-3 col-lg-3 " align="center"><img
+              alt="profile_picture"
+              src="{{ user.profile_picture.url }}"
+              class="img-circle img-responsive">
+            </div>
+
+            <div class=" col-md-9 col-lg-9 ">
+              <table class="table table-user-information">
+                <tbody>
+                <tr>
+                  <td>First Name:</td>
+                  <td>{{ user.first_name }}</td>
+                </tr>
+                <tr>
+                  <td>Last name:</td>
+                  <td>{{ user.last_name }}</td>
+                </tr>
+                <tr>
+                  <td>E-mail:</td>
+                  <td>{{ user.email }}</td>
+                </tr>
+
+                <tr>
+                  <td>VIP expires:</td>
+                  <td>{{ user.vip_expiry }}</td>
+                </tr>
+                <tr>
+                  <td>Avatar:</td>
+                  <td><img
+                    alt="avatar_picture"
+                    src="{{ user.avatar.image.url }}"
+                    class="img-circle img-responsive"
+                    style="width:64px; heigth:64px">
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row align-items-center justify-content-center">
+            <a href="{% url 'profile_edit' %}" class="btn btn-outline-primary"
+            >Edit
+              profile info</a>
+            <a class="btn btn-outline-danger ml-3" href = "#">Buy
+              VIP
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
+
 {% endblock body %}
 
