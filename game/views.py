@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
-
-from game.serializers import CardSerializer
-from .forms import SignUpForm, ImageForm
 from django.views.generic import TemplateView
-from dixit.models import Card
-from django.http import HttpResponse
 from rest_framework import viewsets
+
+from dixit.models import Card
+from dixit.serializers import CardSerializer
+from .forms import ImageForm
 
 def model_form_upload(request):
     if request.method == 'POST':
