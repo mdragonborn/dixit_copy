@@ -14,11 +14,11 @@
       <div class="panel panel-info">
         <div class="panel-body">
           <div class="row">
-            <div class = "col-md-2 col-lg-2">
+            <div class="col-md-2 col-lg-2">
               &nbsp;
             </div>
             <div class=" col-md-8 col-lg-8 ">
-              <table class="table table-user-information">
+              <!--<table class="table table-user-information">
                 <thead>
 
                 <tr>
@@ -40,9 +40,27 @@
                 </tr>
                 {% endfor %}
                 </tbody>
-              </table>
+              </table>-->
+              <!--<table
+                class="table table-user-information align-items-center justify-content-center">
+                {% for x,y in form.fields.avatars.choices %}
+                <div class="row">
+                  <img src="{{ y.url }}" id="{{ x }}"
+                       class="img-responsive img-rounded">
+                </div>
+                {% endfor %}
+              </table>-->
+              {% for choice in form.avatars.field.choices %}
+               <input name='{{ form.avatars.codename }}'
+                 id='{{ form.avatars.id }}_{{ forloop.counter0 }}'
+                      type='radio' value='{{ choice.0 }}'
+                 {% if not form.is_bound %}{% ifequal form.avatars.field.initial choice.0 %} checked='checked' {% endifequal %}
+               {% else %}{% ifequal form.avatars.data choice.0 %} checked='checked' {% endifequal %}{% endif %}/>
+               <label for='{{ form.avatars.id }}_{{ forloop.counter0 }}'>{{
+                 choice.1 }}</label>
+             {% endfor %}
             </div>
-            <div class = "col-md-2 col-lg-2">
+            <div class="col-md-2 col-lg-2">
               &nbsp;
             </div>
           </div>
