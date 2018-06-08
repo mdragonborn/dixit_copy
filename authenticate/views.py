@@ -14,8 +14,8 @@ def signup(request):
             user = form.save()
             login(request, user)
             return redirect('home')
-    else:
-        form = SignUpForm()
+
+    form = SignUpForm()
     return render(request, 'authenticate/signup.html', {'form': form})
 
 
@@ -25,8 +25,6 @@ def model_form_upload(request):
         if form.is_valid():
             form.save()
             return redirect('home')
-    else:
-        form = ImageForm()
-    return render(request, 'authenticate/model_form_upload.html', {
-        'form': form
-    })
+
+    form = ImageForm()
+    return render(request, 'authenticate/model_form_upload.html', {'form': form})

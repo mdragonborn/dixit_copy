@@ -5,7 +5,8 @@ from dixit.models import Player, Avatar
 
 
 class SignUpForm(UserCreationForm):
-    email = forms.CharField(max_length=254, required=True, widget=forms.EmailInput())
+    email = forms.CharField(max_length=254, required=True,
+                            widget=forms.EmailInput())
 
     class Meta:
         model = Player
