@@ -65,8 +65,7 @@ class Expansion(models.Model):
 
 class Card(models.Model):
     expansion = models.ForeignKey(Expansion, on_delete=models.SET_NULL, null=True)
-    image = models.ImageField(upload_to='cards',
-                              default='cards/default.jpg')
+    image = models.ImageField(upload_to='cards')
     codename = models.CharField(max_length=100, unique=True)
 
 
