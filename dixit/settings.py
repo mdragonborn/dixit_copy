@@ -12,8 +12,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -25,6 +27,7 @@ SECRET_KEY = '$h7sub0kl*9&gq#b0n2-=n(dyha8+_93)7b)(%^!ft1)$9e!=i'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
 
 # Application definition
 
@@ -60,7 +63,7 @@ ROOT_URLCONF = 'dixit.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,47 +76,25 @@ TEMPLATES = [
     },
 ]
 
-# SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
-# TEMPLATE_DIRS = (
-#    os.path.join(SETTINGS_PATH, 'templates'),
-# )
-
-# settings for templates
-# https://stackoverflow.com/questions/15411164/django-templates-folders
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_ROOT, 'templates').replace('\\', '/'),
-)
-
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-    #     'django.template.loaders.eggs.Loader',
-)
-# end setting for templates
-
 WSGI_APPLICATION = 'dixit.wsgi.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dixit',
-        'USER': 'djangomod',
+        'ENGINE':   'django.db.backends.postgresql',
+        'NAME':     'dixit',
+        'USER':     'djangomod',
         'PASSWORD': 'qwe123',
-        'HOST': 'localhost',
-        'PORT': '',
+        'HOST':     'localhost',
+        'PORT':     '',
     },
 }
 
 AUTH_USER_MODEL = 'dixit.Player'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -132,6 +113,22 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# Login settings
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+# Used to debug password reset, comment out when in production.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'dixit'
+EMAIL_HOST_PASSWORD = '321drowssap'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Dixit Team <noreply@example.com>'
 
 
 # Internationalization
@@ -158,16 +155,3 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
-
-#used to debug password reset, comment out when in production
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'dixit'
-EMAIL_HOST_PASSWORD = '321drowssap'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Dixit Team <noreply@example.com>'
