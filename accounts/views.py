@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
+
 from .forms import SignUpForm, ImageForm
 
 
 def home(request):
-    return render(request, 'authenticate/home.html')
+    return render(request, 'accounts/home.html')
 
 
 def signup(request):
@@ -14,9 +15,9 @@ def signup(request):
             user = form.save()
             login(request, user)
             return redirect('home')
-    else:
-        form = SignUpForm()
-    return render(request, 'authenticate/signup.html', {'form': form})
+
+    form = SignUpForm()
+    return render(request, 'accounts/signup.html', {'form': form})
 
 
 def model_form_upload(request):
@@ -25,8 +26,6 @@ def model_form_upload(request):
         if form.is_valid():
             form.save()
             return redirect('home')
-    else:
-        form = ImageForm()
-    return render(request, 'authenticate/model_form_upload.html', {
-        'form': form
-    })
+
+    form = ImageForm()
+    return render(request, 'accounts/model_form_upload.html', {'form': form})

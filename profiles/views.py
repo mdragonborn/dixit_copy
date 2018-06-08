@@ -1,25 +1,21 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 
 from profiles.forms import EditProfileForm
 
 
 @login_required
 def profile(request):
-    args = {'user': request.user}
-    return render(request, 'profiles/profile.html', args)
+    return render(request, 'profiles/profile.html', {'user': request.user})
 
 
 @login_required
 def profile_edit(request):
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
-        if (form.is_valid()):
+        if form.is_valid():
             form.save()
-            redirect('profiles')
-    else:
-        form = EditProfileForm(instance=request.user)
-        args = {'form': form}
-        return render(request, 'profiles/profile_edit.html',
-                      args)
+            return redirect('profile')
 
+    form = EditProfileForm(instance=request.user)
+    return render(request, 'profiles/profile_edit.html', {'form': form})

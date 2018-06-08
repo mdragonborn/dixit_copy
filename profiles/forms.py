@@ -1,6 +1,8 @@
-from django import forms
 from django.contrib.auth.forms import UserChangeForm
-from dixit.models import Player, Avatar
+
+from dixit.models import Player
+
+
 class EditProfileForm(UserChangeForm):
     class Meta:
         model = Player
@@ -11,7 +13,7 @@ class EditProfileForm(UserChangeForm):
             'email',
             'password',
             'profile_picture',
-            # 'avatar'
+            # 'avatar',
         )
 
     # def __init__(self, *args, **kwargs):
