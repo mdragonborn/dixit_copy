@@ -15,39 +15,33 @@ export default class Game extends React.Component {
       game: {
         tableCards: [
           {
+            "id": 1,
+            "image": "http://127.0.0.1:8000/media/cards/001.png",
+            "codename": "leja"
+          },
+          {
             "id": 2,
-            "expansion": null,
-            "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
+            "image": "http://127.0.0.1:8000/media/cards/002.png",
             "codename": "leja"
           },
           {
             "id": 3,
-            "expansion": null,
-            "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
+            "image": "http://127.0.0.1:8000/media/cards/003.png",
             "codename": "leja"
           },
           {
             "id": 4,
-            "expansion": null,
-            "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
+            "image": "http://127.0.0.1:8000/media/cards/004.png",
             "codename": "leja"
           },
           {
             "id": 5,
-            "expansion": null,
-            "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
+            "image": "http://127.0.0.1:8000/media/cards/005.png",
             "codename": "leja"
           },
           {
             "id": 6,
-            "expansion": null,
-            "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-            "codename": "leja"
-          },
-          {
-            "id": 7,
-            "expansion": null,
-            "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
+            "image": "http://127.0.0.1:8000/media/cards/006.png",
             "codename": "leja"
           }
         ],
@@ -113,7 +107,7 @@ export default class Game extends React.Component {
     return (
       <MainLayout>
         <Table gameStatus={this.state.gameStatus}
-               cards={this.state.tableCards}
+               cards={this.state.game.tableCards}
                onClickPickedCard={this.onClickPickedCard}
                defaultCard={this.state.defaultCard}
                submittedCount={this.state.submittedCount}
@@ -121,7 +115,7 @@ export default class Game extends React.Component {
         />
         <StatusBar gameStatus={this.state.displayStatus}
         />
-        <MyHand cards={this.state.myCards}
+        <MyHand cards={this.state.game.myCards}
                 defaultCard={this.state.defaultCard}
                 onClickPickedCard={this.onClickPickMyCard}
                 gameStatus={this.state.gameStatus}

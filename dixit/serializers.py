@@ -6,7 +6,7 @@ import dixit.models as models
 class CardSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Card
-        fields = ('id', 'expansion', 'image', 'codename')
+        fields = ('id', 'image', 'codename')
 
 
 class AvatarSerializer(serializers.HyperlinkedModelSerializer):

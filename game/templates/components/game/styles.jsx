@@ -5,23 +5,27 @@ export const MainLayout = styled.div`
 `;
 
 export const TableLayout = styled.div`
-    display: block;
-    padding: 5vh 0;
-    text-align: center;
-    align-content: center;
-    justify-content: center;
-    height: 35vh;
+  padding: 5vh 0;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  height: 35vh;
     
-    img {
-        max-width: 12vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  
+  img {
+    max-width: 12vw;
     max-height: 30vh;
     padding: 10px;
     transition: all .2s ease-in-out;
+    border-radius: 20px;
   }
   
   img:hover {
     transform: scale(1.3);
   }
+  
   .grow {
     transform: scale(1.3);
   }
@@ -61,6 +65,7 @@ export const HandGrid = styled.div`
     max-height: 30vh;
     padding: 10px;
     transition: all .2s ease-in-out;
+    border-radius: 20px;
   }
   
   img:hover {
