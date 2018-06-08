@@ -14,6 +14,8 @@ from .forms import ImageForm
 import pickle
 from django.core.cache import cache
 
+import redis
+
 
 def model_form_upload(request):
     if request.method == 'POST':
@@ -40,9 +42,10 @@ class GameView(TemplateView):
 
     # @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        game_cache = cache.get(kwargs['game_id'])
+        redis_db = redis.StrictRedis(host="localhost", port=6379, db=0)
+        game_cache = redis_db.get(kwargs['game_id'])
         print(request.method)
-        print("cache", game_cache)
+        print("redis_db", game_cache)
         # if not game_cache:
         #     messages.add_message(request, messages.ERROR, "soz")
         #     return redirect ('/lobby/')
@@ -57,11 +60,11 @@ class GameView(TemplateView):
         if game_cache is None:
             game = Game(user.id, 4)
             games = {}
-            if(cache.get('available_games') is not None):
-                games = pickle.loads(cache.get('available_games'))
+            if(redis_db.get('available_games') is not None):
+                games = pickle.loads(redis_db.get('available_games'))
             games[game_id]={'free_places': game.player_limit-1, 'limit': game.player_limit }
             print(games)
-            cache.set('available_games', pickle.dumps(games))
+            redis_db.set('available_games', pickle.dumps(games))
         else:
             game = pickle.loads(game_cache)
 
@@ -72,15 +75,15 @@ class GameView(TemplateView):
                 return redirect('/lobby/')
 
             # with cache.lock('available_games'):
-            games = pickle.loads(cache.get('available_games'))
+            games = pickle.loads(redis_db.get('available_games'))
             print(games)
             if game.has_started:
                 games.remove(game_id)
             else:
                 games[game_id]['free_places'] -= 1
 
-            # cache.set('available_games', pickle.dumps(games))
-            cache.set(game_id, pickle.dumps(game))
+            # redis_db.set('available_games', pickle.dumps(games))
+            redis_db.set(game_id, pickle.dumps(game))
         return super(GameView, self).dispatch(request, *args, **kwargs)
 
 

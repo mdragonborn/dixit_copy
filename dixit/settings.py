@@ -165,3 +165,16 @@ WEBPACK_LOADER = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+REDIS_HOST = os.getenv('DIXIT_REDIS_HOST', 'localhost')
+REDIS_PORT = int(os.getenv('DIXIT_REDIS_PORT', 6379))
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'PICKLE_VERSION': -1
+        },
+    },
+}
