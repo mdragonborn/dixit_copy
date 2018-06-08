@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+
+  dixit:
+    build: .
+    depends_on:
+      - redis
+    ports:
+      - 8000:8000
+    command: "python manage.py runserver"
