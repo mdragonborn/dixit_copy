@@ -26,7 +26,7 @@ SECRET_KEY = '$h7sub0kl*9&gq#b0n2-=n(dyha8+_93)7b)(%^!ft1)$9e!=i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'dixit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE':   'django.db.backends.postgresql',
-        'NAME':     'dixit',
-        'USER':     'djangomod',
-        'PASSWORD': 'qwe123',
-        'HOST':     'localhost',
-        'PORT':     '',
+        'NAME':     os.getenv('DIXIT_DB_NAME', 'dixit'),
+        'USER':     os.getenv('DIXIT_DB_USER', 'dixit'),
+        'PASSWORD': os.getenv('DIXIT_DB_PASSWORD', 'qwe123'),
+        'HOST':     os.getenv('DIXIT_DB_HOST', 'localhost'),
+        'PORT':     int(os.getenv('DIXIT_DB_PORT', 5432)),
     },
 }
 
