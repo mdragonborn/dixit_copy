@@ -10,7 +10,7 @@ from .game import Game
 
 from dixit.models import Card
 from dixit.serializers import CardSerializer
-from .forms import ImageForm
+from .forms import ImageForm, CreateGameForm
 import pickle
 from django.core.cache import cache
 
@@ -28,6 +28,19 @@ def model_form_upload(request):
     return render(request, 'cardupload/model_form_upload.html', {
         'form': form
     })
+
+
+@login_required()
+def create_game(request):
+    if request.method == 'POST':
+        form = CreateGameForm(request.POST)
+        if form.is_valid():
+            game = Game(get_user(request).id, form.cleaned_data['num_of_players'])
+            redis_db = redis.StrictRedis(host="localhost", port=6397, db=0)
+            redis_db.set(game.game_id, pickle.dumps(game))
+            return redirect('game' + game.game_id)
+    form = CreateGameForm()
+    return render(request, 'create_game.html', {'form': form})
 
 
 class RetrieveImages(viewsets.ModelViewSet):
