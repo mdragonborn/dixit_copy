@@ -1,0 +1,90 @@
+[
+    {
+        "model": "dixit.player",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$100000$pZKckf6ln96x$VLas3mcu19zXtAvJQq+XQuMamAo+9NU8BbicqdpEy+o=",
+            "last_login": "2018-06-08T05:04:19.067Z",
+            "is_superuser": false,
+            "username": "test1",
+            "first_name": "",
+            "last_name": "",
+            "email": "test1@example.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2018-06-08T05:04:18.940Z",
+            "avatar": 1,
+            "profile_picture": "profile_pictures/default.png",
+            "is_vip": false,
+            "vip_expiry": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "dixit.player",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$100000$3IlpHEgAGKQ0$GjEEKkjPsmTVHO9tgtueDhiVl20kWy8pviJVh5PrSIE=",
+            "last_login": "2018-06-08T05:04:30.182Z",
+            "is_superuser": false,
+            "username": "test2",
+            "first_name": "",
+            "last_name": "",
+            "email": "test2@example.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2018-06-08T05:04:30.078Z",
+            "avatar": 1,
+            "profile_picture": "profile_pictures/default.png",
+            "is_vip": false,
+            "vip_expiry": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "dixit.player",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$100000$xBHas6dw7Aap$y5kvJ5+Jhk4tSbSIA4SllKG8MwmKcWERcxWD+AIEh2A=",
+            "last_login": "2018-06-08T05:04:39.240Z",
+            "is_superuser": false,
+            "username": "test3",
+            "first_name": "",
+            "last_name": "",
+            "email": "test3@example.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2018-06-08T05:04:38.756Z",
+            "avatar": 1,
+            "profile_picture": "profile_pictures/default.png",
+            "is_vip": false,
+            "vip_expiry": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "dixit.player",
+        "pk": 4,
+        "fields": {
+            "password": "pbkdf2_sha256$100000$R9M0TzFFgzdi$DoUmppiLk7MqfoZ2uXzomou/skIylwiThBWSofIQJb8=",
+            "last_login": "2018-06-08T05:05:13.632Z",
+            "is_superuser": false,
+            "username": "test4",
+            "first_name": "",
+            "last_name": "",
+            "email": "test4@example.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2018-06-08T05:05:01.112Z",
+            "avatar": 1,
+            "profile_picture": "profile_pictures/default.png",
+            "is_vip": false,
+            "vip_expiry": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]

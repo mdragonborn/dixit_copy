@@ -1,0 +1,121 @@
+[
+    {
+        "model": "dixit.avatar",
+        "pk": 1,
+        "fields": {
+            "image": "avatars/rabbit.png",
+            "codename": "default"
+        }
+    },
+    {
+        "model": "dixit.achievementtype",
+        "pk": 1,
+        "fields": {
+            "name": "Games won",
+            "codename": "wins"
+        }
+    },
+    {
+        "model": "dixit.achievementtype",
+        "pk": 2,
+        "fields": {
+            "name": "Fastest victory",
+            "codename": "win-speed"
+        }
+    },
+    {
+        "model": "dixit.achievementtype",
+        "pk": 3,
+        "fields": {
+            "name": "Most convincing victory",
+            "codename": "win-difference"
+        }
+    },
+    {
+        "model": "dixit.achievementtype",
+        "pk": 4,
+        "fields": {
+            "name": "Longest win streak",
+            "codename": "win-streak"
+        }
+    },
+    {
+        "model": "dixit.achievementtype",
+        "pk": 5,
+        "fields": {
+            "name": "Longest guess streak",
+            "codename": "guess-streak"
+        }
+    },
+    {
+        "model": "dixit.achievementtype",
+        "pk": 6,
+        "fields": {
+            "name": "Points",
+            "codename": "points"
+        }
+    },
+    {
+        "model": "dixit.expansion",
+        "pk": 1,
+        "fields": {
+            "name": "Dixit",
+            "image": "expansions/default.png",
+            "codename": "dixit"
+        }
+    },
+    {
+        "model": "dixit.card",
+        "pk": 1,
+        "fields": {
+            "expansion": 1,
+            "image": "001.png",
+            "codename": "cello-girl"
+        }
+    },
+    {
+        "model": "dixit.card",
+        "pk": 2,
+        "fields": {
+            "expansion": 1,
+            "image": "002.png",
+            "codename": "heads-granny"
+        }
+    },
+    {
+        "model": "dixit.card",
+        "pk": 3,
+        "fields": {
+            "expansion": 1,
+            "image": "003.png",
+            "codename": "boy-dragon"
+        }
+    },
+    {
+        "model": "dixit.card",
+        "pk": 4,
+        "fields": {
+            "expansion": 1,
+            "image": "004.png",
+            "codename": "bubble-planets"
+        }
+    },
+    {
+        "model": "dixit.card",
+        "pk": 5,
+        "fields": {
+            "expansion": 1,
+            "image": "005.png",
+            "codename": "dove-ladder"
+        }
+    },
+    {
+        "model": "dixit.card",
+        "pk": 6,
+        "fields": {
+            "expansion": 1,
+            "image": "006.png",
+            "codename": "book-tower"
+        }
+    }
+]
