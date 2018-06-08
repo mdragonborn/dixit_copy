@@ -3,16 +3,21 @@ import uuid
 
 
 class Game:
+    guid = 1
     def __init__(self, creator_id, player_limit):
-        self.game_id = uuid.UUID()
+        self.game_id = self.guid
+        self.guid += 1
+        print(self.game_id)
         self.creator_id = creator_id
         self.players = [[creator_id, 0, 0]]  # id, score, streak
         self.player_limit = player_limit
         self.cards = dict()
         self.card_iterator = 0
-        cards = random.shuffle(range(1, 85))
+        tmp = list(range(1, 85))
+        random.shuffle(tmp)
+        self.cards = []
         for i in range(0, 84):
-            self.cards[i] = cards[i]
+            self.cards.append(tmp[i])
         self.has_started = False
         self.has_ended = False
         self.player_turn = 0
@@ -30,8 +35,9 @@ class Game:
                 return False
             else:
                 self.players += [player_id, 0, 0]
-                if len(self.players)==self.player_limit:
-                    self.start_game()
+                # if len(self.players)==self.player_limit:
+                #     self.start_game()
+        return True
 
     def get_stage(self):
         return self.turn_details['stage']
@@ -44,7 +50,7 @@ class Game:
         self.turn_details['stage'] = 'WAITING_FOR_MOVE'
 
     def is_available(self):
-        return (self.turn_details['stage'] == 'WAITING_FOR_START') & self.player_limit>len(self.players)
+        return (self.turn_details['stage'] == 'WAITING_FOR_START') and self.player_limit>len(self.players)
 
     def get_initial_cards(self):
         cards = list()
@@ -61,14 +67,14 @@ class Game:
         return card
 
     def make_move(self, player_id, card, keyword):
-        if (self.turn_details['stage'] == 'WAITING_FOR_MOVE') & self.player_turn == player_id:
+        if (self.turn_details['stage'] == 'WAITING_FOR_MOVE') and self.player_turn == player_id:
             self.turn_details['stage'] = 'WAITING_FOR_OTHER_CARDS'
             self.turn_details['keyword'] = keyword
             self.turn_details['right-card'] = card
             self.turn_details['other-cards'] = dict()
 
     def make_move_others(self, player_id, card):
-        if (self.turn_details['stage'] == 'WAITING_FOR_OTHER_CARDS') & (self.turn_details['other-cards'] != 0):
+        if (self.turn_details['stage'] == 'WAITING_FOR_OTHER_CARDS') and (self.turn_details['other-cards'] != 0):
             self.turn_details['other-cards'][card] = player_id
             if len(self.turn_details['other-cards']) == self.player_limit - 1:
                 self.turn_details['stage'] = 'WAITING_FOR_VOTES'
@@ -76,8 +82,8 @@ class Game:
         return False
 
     def vote(self, player_id, card):
-        if (self.turn_details['stage'] == 'WAITING_FOR_VOTES') & (
-            self.turn_details['other-cards'][card] != player_id) & (self.turn_details['votes'][player_id] != 0):
+        if (self.turn_details['stage'] == 'WAITING_FOR_VOTES') and (
+            self.turn_details['other-cards'][card] != player_id) and (self.turn_details['votes'][player_id] != 0):
             self.turn_details['votes'][player_id] = card
         else:
             return False
@@ -102,7 +108,7 @@ class Game:
             for vote in self.turn_details['votes']:
                 answerSum[vote] += 1
 
-            if answerSum[self.turn_details['right-card']] > 0 & answerSum[
+            if answerSum[self.turn_details['right-card']] > 0 and answerSum[
                 self.turn_details['right-card']] < self.player_limit - 1:
                 self.players[self.player_turn][1] += 3
                 addedPoints[self.player_turn] = 3

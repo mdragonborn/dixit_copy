@@ -14,6 +14,7 @@ from .forms import ImageForm
 import pickle
 from django.core.cache import cache
 
+
 def model_form_upload(request):
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
@@ -33,42 +34,55 @@ class RetrieveImages(viewsets.ModelViewSet):
 
 
 class GameView(TemplateView):
-    template_name='components/game/index.html'
+    template_name = 'components/game/index.html'
     game = None
     game_id = None
 
     # @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         game_cache = cache.get(kwargs['game_id'])
-        #
+        print(request.method)
+        print("cache", game_cache)
         # if not game_cache:
         #     messages.add_message(request, messages.ERROR, "soz")
         #     return redirect ('/lobby/')
         game_id = kwargs['game_id']
-        with cache.lock(game_id):
-            user = get_user(request)
-            game = None
-            if not game_cache:
-                game = Game(user.id,4)
+
+        # with cache._lock(game_id):
+        user = get_user(request)
+        print(game_cache)
+        game = None
+
+        #
+        if game_cache is None:
+            game = Game(user.id, 4)
+            games = {}
+            if(cache.get('available_games') is not None):
+                games = pickle.loads(cache.get('available_games'))
+            games[game_id]={'free_places': game.player_limit-1, 'limit': game.player_limit }
+            print(games)
+            cache.set('available_games', pickle.dumps(games))
+        else:
+            game = pickle.loads(game_cache)
+
+        if game.is_available():
+            result = game.add_player(user.id)
+            if not result:
+                messages.add_message(request, messages.ERROR, "nesto nece")
+                return redirect('/lobby/')
+
+            # with cache.lock('available_games'):
+            games = pickle.loads(cache.get('available_games'))
+            print(games)
+            if game.has_started:
+                games.remove(game_id)
             else:
-                game = pickle.loads(game_cache)
+                games[game_id]['free_places'] -= 1
 
-            if game.is_available():
-                result = game.add_player(user.id)
-                if not result:
-                    messages.add_message(request, messages.ERROR, "nesto nece")
-                    return redirect('/lobby/')
+            # cache.set('available_games', pickle.dumps(games))
+            cache.set(game_id, pickle.dumps(game))
+        return super(GameView, self).dispatch(request, *args, **kwargs)
 
-                with cache.lock('available_games'):
-                    games = pickle.loads(cache.get('available_games'))
-                    if game.has_started():
-                        games.remove(game_id)
-                    else:
-                        games[game_id]['free_places'] -= 1
-
-                cache.put(pickle.dumps(games))
-                cache.set(game_id, pickle.dumps(game))
-                return super(GameView, self).dispatch(self,request,args,kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(GameView, self).get_context_data(**kwargs)
