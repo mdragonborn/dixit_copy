@@ -1,3 +1,4 @@
+
 """dixit URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -19,7 +20,16 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.urls import path
+from django.urls import include, path
+from game.views import GameView
+from django.conf.urls import url
+from django.conf.urls.static import static
+from dixit import settings
+from game  import views
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'cards', views.RetrieveImages)
 
 from accounts import views as accounts_views
 from profiles import views as profiles_views
@@ -27,6 +37,11 @@ from profiles import views as profiles_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    url(r'^game/(?P<game_id>\d+)/$', GameView.as_view()),
+    url(r'^img-api/', include(router.urls)),
+    url(r'^upload/$', views.model_form_upload, name='upload'),
+    url(r'^img-api/', include('rest_framework.urls', namespace='rest_framework')),
 
     # TODO: Use path instead of url.
     # TODO: Fix this clusterfuck - subdivide urls by app.
@@ -70,3 +85,6 @@ urlpatterns = [
     url(r'^profile/edit$', profiles_views.profile_edit,
       name='profile_edit')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# //////// POLICE LINE DO NOT CROSS //////// POLICE LINE DO NOT CROSS ////////
+urlpatterns += static(settings.STATIC_URL, document_root=settings.TEST_DIRECT_STATIC)

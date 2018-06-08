@@ -28,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'webpack_loader'
 ]
 
 MIDDLEWARE = [
@@ -77,7 +78,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'dixit.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -150,8 +150,31 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, "static"),
 ]
+TEST_DIRECT_STATIC = os.path.join(BASE_DIR, 'static')
+
+
+WEBPACK_LOADER = {
+    'DEFAULT' : {
+        'BUNDLE_DIR_NAME' : '/bundles/',
+        'STATS_FILE' : os.path.join(BASE_DIR, 'webpack-stats.json')
+    }
+}
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+REDIS_HOST = os.getenv('DIXIT_REDIS_HOST', 'localhost')
+REDIS_PORT = int(os.getenv('DIXIT_REDIS_PORT', 6379))
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'PICKLE_VERSION': -1
+        },
+    },
+}
