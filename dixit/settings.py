@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'dixit',
-    'authenticate',
+    'accounts',
     'profiles',
 
     'django_pdb',

@@ -1,8 +1,8 @@
 # from django.urls import resolve, reverse
 # from django.test import TestCase
 # from profiles.models import Player
-# from authenticate.views import signup
-# from authenticate.forms import SignUpForm
+# from accounts.views import signup
+# from accounts.forms import SignUpForm
 #
 #
 # # ALTER USER djangomod CREATEDB;
