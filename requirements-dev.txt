@@ -1,3 +1,2 @@
 ipdb==0.10
 ipython
--r requirements.txt
