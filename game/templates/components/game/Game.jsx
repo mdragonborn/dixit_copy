@@ -1,5 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+
+import Websocket from 'react-websocket';
+
 import MyHand from './MyHand';
 import Table from './Table';
 import StatusBar from './StatusBar';
@@ -10,85 +12,52 @@ export default class Game extends React.Component {
     super(props);
     this.state = {
       c: "starting",
-      tableCards: [
-        {
-          "id": 2,
-          "expansion": null,
-          "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-          "codename": "leja"
-        },
-        {
-          "id": 3,
-          "expansion": null,
-          "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-          "codename": "leja"
-        },
-        {
-          "id": 4,
-          "expansion": null,
-          "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-          "codename": "leja"
-        },
-        {
-          "id": 5,
-          "expansion": null,
-          "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-          "codename": "leja"
-        },
-        {
-          "id": 6,
-          "expansion": null,
-          "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-          "codename": "leja"
-        },
-        {
-          "id": 7,
-          "expansion": null,
-          "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-          "codename": "leja"
-        }
-      ],
-      submittedCount: 3,
-      gameStatus: "PICK_CARD",
+      game: {
+        tableCards: [
+          {
+            "id": 2,
+            "expansion": null,
+            "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
+            "codename": "leja"
+          },
+          {
+            "id": 3,
+            "expansion": null,
+            "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
+            "codename": "leja"
+          },
+          {
+            "id": 4,
+            "expansion": null,
+            "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
+            "codename": "leja"
+          },
+          {
+            "id": 5,
+            "expansion": null,
+            "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
+            "codename": "leja"
+          },
+          {
+            "id": 6,
+            "expansion": null,
+            "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
+            "codename": "leja"
+          },
+          {
+            "id": 7,
+            "expansion": null,
+            "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
+            "codename": "leja"
+          }
+        ],
+        state: "WAITING_FOR_START",
+        myCards: [{id: 2, image: "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png"},],
+        players: [],
+        turn: 0
+      },
       displayStatus: "Pick a card",
-      myCards: [
-        {
-          "id": 2,
-          "expansion": null,
-          "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-          "codename": "leja"
-        },
-        {
-          "id": 3,
-          "expansion": null,
-          "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-          "codename": "leja"
-        },
-        {
-          "id": 4,
-          "expansion": null,
-          "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-          "codename": "leja"
-        },
-        {
-          "id": 5,
-          "expansion": null,
-          "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-          "codename": "leja"
-        },
-        {
-          "id": 6,
-          "expansion": null,
-          "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-          "codename": "leja"
-        },
-        {
-          "id": 7,
-          "expansion": null,
-          "image": "http://127.0.0.1:8000/media/cards/16586428_1363362600402292_1922198806_o.png",
-          "codename": "leja"
-        }
-      ],
+      gameStatus: "PICK_CARD",
       currentlyPicked: null,
       defaultCard: "http://127.0.0.1:8000/media/cards/pic879970.jpg"
     };
@@ -96,6 +65,18 @@ export default class Game extends React.Component {
     this.onClickPickedCard = this.onClickPickedCard.bind(this);
     this.onClickPickMyCard = this.onClickPickMyCard.bind(this);
     this.handleData = this.handleData.bind(this);
+  }
+
+  componentDidMount() {
+    this.getGame()
+  }
+
+  getGame() {
+    const game_url = 'http://localhost:8000/game-from-id/'+this.props.game_id;
+
+    fetch(game_url).then(
+      response => this.setState({game:JSON.parse(response)})
+    )
   }
 
   onClickPickedCard(props) {
@@ -146,6 +127,8 @@ export default class Game extends React.Component {
                 gameStatus={this.state.gameStatus}
                 currentlyPicked = {this.state.currentlyPicked}
         />
+        <Websocket ref="socket" url={this.props.socket}
+                   onMessage={this.handleData} reconnect={true}/>
       </MainLayout>
     );
   }

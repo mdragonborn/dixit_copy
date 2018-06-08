@@ -1,6 +1,8 @@
 import React from 'react'
 import {PlayersLayout} from './styles'
 
+
+//TODO get participants api
 export default class Players extends React.Component {
   constructor(props) {
     super(props);

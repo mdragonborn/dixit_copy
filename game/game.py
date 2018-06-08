@@ -9,15 +9,14 @@ class Game:
         Game.guid += 1
         print(self.game_id)
         self.creator_id = creator_id
-        self.players = [[creator_id, 0, 0]]  # id, score, streak
+        self.players = [{ "id": creator_id, "score":0, "streak":0, "hand":[] }]
         self.player_limit = player_limit
-        self.cards = dict()
         self.card_iterator = 0
         tmp = list(range(1, 85))
         random.shuffle(tmp)
-        self.cards = []
+        self.deck = []
         for i in range(0, 84):
-            self.cards.append(tmp[i])
+            self.deck.append(tmp[i])
         self.has_started = False
         self.has_ended = False
         self.player_turn = 0
@@ -34,7 +33,7 @@ class Game:
             if (len(self.players) == self.player_limit):
                 return False
             else:
-                self.players += [player_id, 0, 0]
+                self.players += { "id": player_id, "score":0, "streak":0, "hand":[] }
                 # if len(self.players)==self.player_limit:
                 #     self.start_game()
         return True
@@ -55,12 +54,12 @@ class Game:
     def get_initial_cards(self):
         cards = list()
         for i in range(self.card_iterator, self.card_iterator + 6):
-            cards += self.cards[i]
+            cards += self.deck[i]
         self.card_iterator += 6
         return cards
 
     def get_next_card(self):
-        card = self.cards[self.card_iterator]
+        card = self.deck[self.card_iterator]
         self.card_iterator += 1
         if (self.card_iterator == 84):
             self.has_ended = True
@@ -129,5 +128,5 @@ class Game:
 
                 if self.players[i][1]>=30:
                     self.turn_details['stage']='GAME_OVER'
-
+            self.player_turn = (self.player_turn + 1 ) % self.player_limit
             return addedPoints
