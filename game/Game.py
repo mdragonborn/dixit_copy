@@ -1,0 +1,95 @@
+import random
+import uuid
+
+class Game:
+
+    def __init__(self, creator_id, player_limit):
+        self.game_id = uuid.UUID()
+        self.creator_id = creator_id
+        self.players = [[creator_id, 0, 0]] #id, score, streak
+        self.player_limit = player_limit
+        self.cards = dict()
+        self.card_iterator = 0
+        cards = random.shuffle(range(1, 84))
+        for i in range(0,83):
+            self.cards[i]=cards[i]
+        self.has_started = False
+        self.has_ended = False
+        self.player_turn = 0
+        self.turn_details = {
+            'stage' : 'WAITING_FOR_START',
+            'keyword' : '',
+            'right-card' : -1,
+            'other-cards' : dict(),
+            'votes': dict()
+        }
+
+    def add_player(self, player_id):
+        if (len(self.players)==self.player_limit):
+            return False
+        else:
+            self.players += [player_id, 0, 0]
+            return len(self.players)-1
+
+    def start_game(self):
+        self.has_started = True
+        self.turn_details['stage'] = 'WAITING_FOR_MOVE'
+
+    def get_initial_cards(self):
+        cards = list()
+        for i in range(self.card_iterator, self.card_iterator+6):
+            cards+=self.cards[i]
+        self.card_iterator += 6
+        return cards
+
+    def get_next_card(self):
+        card = self.cards[self.card_iterator]
+        self.card_iterator += 1
+        if(self.card_iterator==84):
+            self.has_ended=True
+        return card
+# TODO poredjenje stringova
+    def make_move(self, player_id, card, keyword):
+        if (self.turn_details['stage']=='WAITING_FOR_MOVE') & self.player_turn==player_id:
+            self.turn_details['stage']='WAITING_FOR_OTHER_CARDS'
+            self.turn_details['keyword']=keyword
+            self.turn_details['right-card']=card
+            self.turn_details['other-cards']=dict()
+
+    def make_move_others(self,player_id, card):
+        if (self.turn_details['stage']=='WAITING_FOR_OTHER_CARDS') & (self.turn_details['other-cards']!=0):
+            self.turn_details['other-cards'][player_id]=card
+            if len(self.turn_details['other-cards']) == self.player_limit-1:
+                self.turn_details['stage']='WAITING_FOR_VOTES'
+                return True
+        return False
+
+    def vote(self, player_id, card):
+        if (self.turn_details['stage']=='WAITING_FOR_VOTES') & (self.turn_details['other-cards'][player_id]!=card) & (self.turn_details['votes'][player_id]!=0):
+            self.turn_details['votes'][player_id]=card
+    def get_scoreboard(self):
+        scoreboard = dict()
+        for i in range(0,self.player_limit):
+            scoreboard[self.players[i][0]]=self.players[i][1]
+        return scoreboard
+
+    def get_cards_after_move(self):
+        if self.turn_details['stage']=='TURN_RESULTS_OVERVIEW':
+            cards = self.turn_details['other-cards']
+            cards[self.player_turn]=self.turn_details['right-card']
+            return cards
+        return False
+
+    def calc_scores(self):
+        if self.turn_details['stage']=='TURN_RESULTS_OVERVIEW':
+            answerSum = dict() # TODO proveri jel treba inicijalizovati
+            for vote in self.turn_details['votes']:
+                answerSum[vote]+=1
+
+            if answerSum[self.turn_details['right-card']]>0 & answerSum[self.turn_details['right-card']]<self.player_limit-1:
+                self.players[self.player_turn][1]+=3
+
+                #WIP
+
+
+
