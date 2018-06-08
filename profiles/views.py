@@ -1,8 +1,25 @@
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+
+from profiles.forms import EditProfileForm
 
 
+@login_required
 def profile(request):
-    if request.user.is_authenticated:
-        return HttpResponse(f"Hi, {request.user.username}!")
+    args = {'user': request.user}
+    return render(request, 'profiles/profile.html', args)
+
+
+@login_required
+def profile_edit(request):
+    if (request.method == 'POST'):
+        form = EditProfileForm(request.POST, instance=request.user)
+        if (form.is_valid()):
+            form.save()
+            redirect('profiles')
     else:
-        return HttpResponse("Damn kids, get off my lawn!")
+        form = EditProfileForm(instance=request.user)
+        args = {'form': form}
+        return render(request, 'profiles/profile_edit.html',
+                      args)
+
