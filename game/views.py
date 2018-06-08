@@ -1,10 +1,18 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework import viewsets
+from django.core.cache import cache
+from django.contrib import messages
+from django.contrib.auth import get_user
+from .game import Game
 
 from dixit.models import Card
 from dixit.serializers import CardSerializer
 from .forms import ImageForm
+import pickle
+from django.core.cache import cache
 
 def model_form_upload(request):
     if request.method == 'POST':
@@ -26,3 +34,43 @@ class RetrieveImages(viewsets.ModelViewSet):
 
 class GameView(TemplateView):
     template_name='components/game/index.html'
+    game = None
+    game_id = None
+
+    # @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        game_cache = cache.get(kwargs['game_id'])
+        #
+        # if not game_cache:
+        #     messages.add_message(request, messages.ERROR, "soz")
+        #     return redirect ('/lobby/')
+        game_id = kwargs['game_id']
+        with cache.lock(game_id):
+            user = get_user(request)
+            game = None
+            if not game_cache:
+                game = Game(user.id,4)
+            else:
+                game = pickle.loads(game_cache)
+
+            if game.is_available():
+                result = game.add_player(user.id)
+                if not result:
+                    messages.add_message(request, messages.ERROR, "nesto nece")
+                    return redirect('/lobby/')
+
+                with cache.lock('available_games'):
+                    games = pickle.loads(cache.get('available_games'))
+                    if game.has_started():
+                        games.remove(game_id)
+                    else:
+                        games[game_id]['free_places'] -= 1
+
+                cache.put(pickle.dumps(games))
+                cache.set(game_id, pickle.dumps(game))
+                return super(GameView, self).dispatch(self,request,args,kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(GameView, self).get_context_data(**kwargs)
+        context['game'] = self.game
+        return context

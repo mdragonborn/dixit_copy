@@ -30,11 +30,21 @@ class Game:
                 return False
             else:
                 self.players += [player_id, 0, 0]
-                return len(self.players) - 1
+                if len(self.players)==self.player_limit:
+                    self.start_game()
+
+    def get_stage(self):
+        return self.turn_details['stage']
+
+    def get_started(self):
+        return self.has_started
 
     def start_game(self):
         self.has_started = True
         self.turn_details['stage'] = 'WAITING_FOR_MOVE'
+
+    def is_available(self):
+        return (self.turn_details['stage'] == 'WAITING_FOR_START') & self.player_limit>len(self.players)
 
     def get_initial_cards(self):
         cards = list()
