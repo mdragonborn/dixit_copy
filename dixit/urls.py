@@ -1,4 +1,3 @@
-
 """dixit URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -25,7 +24,7 @@ from game.views import GameView
 from django.conf.urls import url
 from django.conf.urls.static import static
 from dixit import settings
-from game  import views
+from game import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
