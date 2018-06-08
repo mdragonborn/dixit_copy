@@ -1,0 +1,8 @@
+from channels.routing import route, route_class
+from channels.staticfiles import StaticFilesConsumer
+from game import consumers
+
+
+channel_routing = [
+    route_class(consumers.GameConsumer,  path=r"^/game/(?P<game_id>\d+)/$")
+]

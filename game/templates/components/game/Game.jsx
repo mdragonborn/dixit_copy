@@ -59,6 +59,7 @@ export default class Game extends React.Component {
     this.onClickPickedCard = this.onClickPickedCard.bind(this);
     this.onClickPickMyCard = this.onClickPickMyCard.bind(this);
     this.handleData = this.handleData.bind(this);
+    this.sendSocketMessage = this.sendSocketMessage.bind(this);
   }
 
   componentDidMount() {
@@ -100,6 +101,11 @@ export default class Game extends React.Component {
       default:
         return;
     }
+  }
+
+  sendSocketMessage(message) {
+    const socket = this.refs.socket;
+    socket.state.ws.send(JSON.stringify(message));
   }
 
   render() {
