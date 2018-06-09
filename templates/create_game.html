@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Create game{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Create game</h3>
+          <form method="post" novalidate>
+            {% csrf_token %}
+              {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-block">Create game</button>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}

@@ -35,6 +35,7 @@ from profiles import views as profiles_views
 
 import accounts.urls as accounts_urls
 import profiles.urls as profiles_urls
+import game.views as game_views
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
@@ -43,6 +44,7 @@ urlpatterns = [
                   url(r'^img-api/', include(router.urls)),
                   url(r'^upload/$', views.model_form_upload, name='upload'),
                   url(r'^img-api/', include('rest_framework.urls', namespace='rest_framework')),
+                  url(r'^create_game', game_views.create_game, name='create_game'),
 
                   # TODO: Use path instead of url.
                   # TODO: Fix this clusterfuck - subdivide urls by app.
