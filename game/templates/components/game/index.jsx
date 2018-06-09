@@ -6,9 +6,9 @@ import ReactDOM from 'react-dom'
 var current_user = null;
 // var game = document.getElementById("game_component").dataset("game_id");
 
-// fetch('http://localhost:8000/currenct-user/?format=json').then(
-//   response => current_user=response
-// );
+fetch('http://localhost:8080/current-user/?format=json').then(
+  response => current_user=response
+);
 
 
 

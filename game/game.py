@@ -1,6 +1,6 @@
 import random
 import uuid
-
+from dixit.models import Player
 
 class Game:
     guid = 1
@@ -33,10 +33,18 @@ class Game:
             if (len(self.players) == self.player_limit):
                 return False
             else:
-                self.players += { "id": player_id, "score":0, "streak":0, "hand":[] }
+                self.players.append({ "id": player_id, "score":0, "streak":0, "hand":[] })
                 # if len(self.players)==self.player_limit:
                 #     self.start_game()
         return True
+
+    def get_participants(self):
+        participants = []
+        print(self.players)
+        for player in self.players:
+            participants.append(Player.objects.get(id=player['id']))
+        print(participants)
+        return participants
 
     def get_stage(self):
         return self.turn_details['stage']
