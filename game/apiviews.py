@@ -26,8 +26,8 @@ class GameParticipantsView(APIView):
                 if p==request.user:
                     found=True
                     break
-            if not found:
-                return Response(status=status.HTTP_401_UNAUTHORIZED)
+            # if not found:
+            #     return Response(status=status.HTTP_401_UNAUTHORIZED)
             results = [PlayerSerializer(participant).data for participant in participants]
             return Response(results)
         else:

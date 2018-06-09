@@ -38,7 +38,6 @@ export const PlayersLayout = styled.div`
   background: lightblue;
   
   * {
-    padding: 5px;
     margin: 5px;
   }
   

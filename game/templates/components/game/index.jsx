@@ -3,24 +3,35 @@ import Game from './Game.jsx'
 import Players from './Players.jsx'
 import ReactDOM from 'react-dom'
 
-var current_user = null;
+let current_user = null;
+let game_participants = null;
 // var game = document.getElementById("game_component").dataset("game_id");
 
-fetch('http://localhost:8080/current-user/?format=json').then(
-  response => current_user=response
+fetch('http://127.0.0.1:8000/current-user/?format=json').then(
+  response => response.json()
+).then(
+  user => current_user = user
+);
+
+fetch('http://127.0.0.1:8000/game/participants/2/?format=json').then(
+  response => response.json()
+).then(
+  participants => {
+    game_participants = participants
+  }
 );
 
 
-
-var game_sock = 'ws://' + window.location.host + "/game/" + 23;
+var game_sock = 'ws://' + window.location.host + "/game/" + 2;
 // preset the current_user
 
-
 // renders out the base component
-function render_component(){
-    console.log("jpg");
-    ReactDOM.render(<Game current_user={current_user} socket={game_sock} game/>, document.getElementById('game_component'))
-    ReactDOM.render(<Players socket={game_sock} />, document.getElementById('players_component'))
+function render_component() {
+  console.log("jpg");
+  ReactDOM.render(<Game current_user={current_user} socket={game_sock}
+                        game/>, document.getElementById('game_component'))
+  ReactDOM.render(<Players participants={game_participants} current_player={current_user}
+                           socket={game_sock}/>, document.getElementById('players_component'))
 }
 
 render_component();
