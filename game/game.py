@@ -6,7 +6,7 @@ class Game:
     guid = 1
     def __init__(self, creator_id, player_limit):
         self.game_id = self.guid
-        self.guid += 1
+        Game.guid += 1
         print(self.game_id)
         self.creator_id = creator_id
         self.players = [[creator_id, 0, 0]]  # id, score, streak
