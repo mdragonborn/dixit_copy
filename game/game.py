@@ -7,7 +7,6 @@ class Game:
     def __init__(self, creator_id, player_limit):
         self.game_id = self.guid
         Game.guid += 1
-        print(self.game_id)
         self.creator_id = creator_id
         self.players = [{ "id": creator_id, "score":0, "streak":0, "hand":[] }]
         self.player_limit = player_limit
@@ -34,16 +33,16 @@ class Game:
                 return False
             else:
                 self.players.append({ "id": player_id, "score":0, "streak":0, "hand":[] })
+                print(self.players)
                 # if len(self.players)==self.player_limit:
                 #     self.start_game()
         return True
 
     def get_participants(self):
         participants = []
-        print(self.players)
         for player in self.players:
+            print(player)
             participants.append(Player.objects.get(id=player['id']))
-        print(participants)
         return participants
 
     def get_stage(self):
