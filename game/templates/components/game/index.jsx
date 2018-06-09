@@ -10,14 +10,18 @@ let game_participants = null;
 fetch('http://127.0.0.1:8000/current-user/?format=json').then(
   response => response.json()
 ).then(
-  user => current_user = user
+  user => {
+    current_user = user;
+    render_component()
+  }
 );
 
 fetch('http://127.0.0.1:8000/game/participants/2/?format=json').then(
   response => response.json()
 ).then(
   participants => {
-    game_participants = participants
+    game_participants = participants;
+    render_component()
   }
 );
 

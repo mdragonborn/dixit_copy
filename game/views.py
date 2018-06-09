@@ -64,7 +64,7 @@ class GameView(TemplateView):
     game = None
     game_id = None
 
-    # @method_decorator(login_required)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         redis_db = redis.StrictRedis(host="localhost", port=6379, db=0)
         game_cache = redis_db.get(kwargs['game_id'])
