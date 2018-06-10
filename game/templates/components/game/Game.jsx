@@ -106,8 +106,7 @@ export default class Game extends React.Component {
 
   sendSocketMessage(message) {
     const socket = this.refs.socket;
-    let m={poruka:"poruka"}
-    console.log(message);
+    let m={text_data:"poruka"}
     socket.state.ws.send(JSON.stringify(m));
   }
 
@@ -115,7 +114,7 @@ export default class Game extends React.Component {
         console.log(this.state);
     return (
       <MainLayout>
-        {/*<button onClick={() => this.sendSocketMessage("poruka")}>Posalji</button>*/}
+        <button onClick={() => this.sendSocketMessage("poruka")}>Posalji</button>
         <Table gameStatus={this.state.gameStatus}
                cards={this.state.game.tableCards}
                onClickPickedCard={this.onClickPickedCard}
