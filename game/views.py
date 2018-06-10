@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework import viewsets
-from django.core.cache import cache
 from django.contrib import messages
 from django.contrib.auth import get_user
 from .game import Game
@@ -12,8 +11,6 @@ from dixit.models import Card
 from dixit.serializers import CardSerializer
 from .forms import ImageForm, CreateGameForm
 import pickle
-from django.core.cache import cache
-
 import redis
 
 from dixit.settings import REDIS_HOST, REDIS_PORT
@@ -98,11 +95,11 @@ class GameView(TemplateView):
             # with cache.lock('available_games'):
             games = pickle.loads(redis_db.get('available_games'))
             if game.has_started:
-                games.remove(game_id)
+                games.pop(game_id)
             else:
                 games[game_id]['free_places'] -= 1
 
-            # redis_db.set('available_games', pickle.dumps(games))
+            redis_db.set('available_games', pickle.dumps(games))
             redis_db.set(game_id, pickle.dumps(game))
 
             return super(GameView, self).dispatch(request, *args, **kwargs)

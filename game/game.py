@@ -1,14 +1,18 @@
 import random
 import uuid
 from dixit.models import Player
+from channels.layers import get_channel_layer
+import json
+from asgiref.sync import async_to_sync
 
 class Game:
     guid = 1
+
     def __init__(self, creator_id, player_limit):
         self.game_id = self.guid
         Game.guid += 1
         self.creator_id = creator_id
-        self.players = [{ "id": creator_id, "score":0, "streak":0, "hand":[] }]
+        self.players = [{"id": creator_id, "score": 0, "streak": 0, "hand": []}]
         self.player_limit = player_limit
         self.card_iterator = 0
         tmp = list(range(1, 85))
@@ -34,20 +38,19 @@ class Game:
         return False
 
     def add_player(self, player_id):
-        if self.turn_details['stage']=='WAITING_FOR_START':
+        if self.turn_details['stage'] == 'WAITING_FOR_START':
             if (len(self.players) == self.player_limit):
                 return False
             else:
-                self.players.append({ "id": player_id, "score":0, "streak":0, "hand":[] })
-                print(self.players)
-                # if len(self.players)==self.player_limit:
-                #     self.start_game()
+                self.players.append({"id": player_id, "score": 0, "streak": 0, "hand": []})
+                print("add",len(self.players), self.player_limit)
+                if len(self.players) == self.player_limit:
+                    self.start_game()
         return True
 
     def get_participants(self):
         participants = []
         for player in self.players:
-            print(player)
             participants.append(Player.objects.get(id=player['id']))
         return participants
 
@@ -58,11 +61,21 @@ class Game:
         return self.has_started
 
     def start_game(self):
+        print("start_game")
         self.has_started = True
         self.turn_details['stage'] = 'WAITING_FOR_MOVE'
+        channel_layer = get_channel_layer()
+        print("started")
+        async_to_sync(channel_layer.group_send)(
+            f'game_{self.game_id}',
+            {
+                "type": "game_update",
+                "message" : json.dumps({"message":"message"})
+            }
+        )
 
     def is_available(self):
-        return (self.turn_details['stage'] == 'WAITING_FOR_START') and self.player_limit>len(self.players)
+        return (self.turn_details['stage'] == 'WAITING_FOR_START') and self.player_limit > len(self.players)
 
     def get_initial_cards(self):
         cards = list()
@@ -124,8 +137,8 @@ class Game:
                 self.turn_details['right-card']] < self.player_limit - 1:
                 self.players[self.player_turn][1] += 3
                 addedPoints[self.player_turn] = 3
-                if self.players[self.player_turn][1]>=30:
-                    self.turn_details['stage']='GAME_OVER'
+                if self.players[self.player_turn][1] >= 30:
+                    self.turn_details['stage'] = 'GAME_OVER'
 
             for i in range(0, self.player_limit):
                 if i == self.player_turn:
@@ -139,7 +152,7 @@ class Game:
                     self.players[i][2] = 0
                     addedPoints[self.turn_details['other-cards'][self.turn_details['vote'][i]]] += 1
 
-                if self.players[i][1]>=30:
-                    self.turn_details['stage']='GAME_OVER'
-            self.player_turn = (self.player_turn + 1 ) % self.player_limit
+                if self.players[i][1] >= 30:
+                    self.turn_details['stage'] = 'GAME_OVER'
+            self.player_turn = (self.player_turn + 1) % self.player_limit
             return addedPoints
