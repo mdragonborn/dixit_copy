@@ -105,5 +105,10 @@ class GameView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(GameView, self).get_context_data(**kwargs)
-        context['game'] = self.game
+        redis_db = redis.StrictRedis(host="localhost", port=6379, db=0)
+        print(self.game_id)
+        if self.game_id is not None:
+            game = redis_db.get(self.game_id)
+            print(game)
+            context['game'] = pickle.loads(game)
         return context

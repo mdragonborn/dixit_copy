@@ -43,6 +43,7 @@ urlpatterns = [
                   path('admin/', admin.site.urls),
 
                   url(r'^game/(?P<game_id>\d+)/$', GameView.as_view()),
+                  url(r'^img-api/', include(router.urls)),
                   url(r'^upload/$', views.model_form_upload, name='upload'),
                   url(r'^create_game', game_views.create_game, name='create_game'),
                   url(r'^current-user/', CurrentUserView.as_view()),
