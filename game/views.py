@@ -16,6 +16,7 @@ from django.core.cache import cache
 
 import redis
 
+from dixit.settings import REDIS_HOST, REDIS_PORT
 
 def model_form_upload(request):
     if request.method == 'POST':
@@ -36,7 +37,7 @@ def create_game(request):
         form = CreateGameForm(request.POST)
         if form.is_valid():
             game = Game(get_user(request).id, int(form.cleaned_data['num_of_players']))
-            redis_db = redis.StrictRedis(host="127.0.0.1", port=6379, db=0)
+            redis_db = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0)
 
             games = {}
             if (redis_db.get('available_games') is not None):
@@ -63,7 +64,7 @@ class GameView(TemplateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        redis_db = redis.StrictRedis(host="localhost", port=6379, db=0)
+        redis_db = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0)
         game_cache = redis_db.get(kwargs['game_id'])
         # if not game_cache:
         #     messages.add_message(request, messages.ERROR, "soz")
@@ -105,7 +106,7 @@ class GameView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(GameView, self).get_context_data(**kwargs)
-        redis_db = redis.StrictRedis(host="localhost", port=6379, db=0)
+        redis_db = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0)
         print(self.game_id)
         if self.game_id is not None:
             game = redis_db.get(self.game_id)

@@ -5,6 +5,7 @@ from dixit.serializers import PlayerSerializer
 import redis
 import pickle
 
+from dixit.settings import REDIS_HOST, REDIS_PORT
 
 class CurrentUserView(APIView):
 
@@ -15,7 +16,7 @@ class CurrentUserView(APIView):
 class GameParticipantsView(APIView):
 
     def get(self, request, *args, **kwargs):
-        redis_db = redis.StrictRedis(host='localhost', port=6379, db=0)
+        redis_db = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0)
         print(kwargs['game_id'])
         game =redis_db.get(kwargs['game_id'])
         print(game)
