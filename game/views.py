@@ -66,9 +66,9 @@ class GameView(TemplateView):
     def dispatch(self, request, *args, **kwargs):
         redis_db = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0)
         game_cache = redis_db.get(kwargs['game_id'])
-        # if not game_cache:
-        #     messages.add_message(request, messages.ERROR, "soz")
-        #     return redirect ('/lobby/')
+        if not game_cache:
+            messages.add_message(request, messages.ERROR, "soz")
+            return redirect ('/lobby/')
         game_id = kwargs['game_id']
 
         # with cache._lock(game_id):
@@ -76,15 +76,18 @@ class GameView(TemplateView):
         game = None
 
         #
-        if game_cache is None:
-            game = Game(user.id, 4)
-            games = {}
-            if(redis_db.get('available_games') is not None):
-                games = pickle.loads(redis_db.get('available_games'))
-            games[game_id]={'free_places': game.player_limit-1, 'limit': game.player_limit }
-            redis_db.set('available_games', pickle.dumps(games))
-        else:
-            game = pickle.loads(game_cache)
+        # if game_cache is None:
+        #     game = Game(user.id, 4)
+        #     games = {}
+        #     if(redis_db.get('available_games') is not None):
+        #         games = pickle.loads(redis_db.get('available_games'))
+        #     games[game_id]={'free_places': game.player_limit-1, 'limit': game.player_limit }
+        #     redis_db.set('available_games', pickle.dumps(games))
+        # else:
+        game = pickle.loads(game_cache)
+        print(game.players)
+        if game.already_joined(user.id):
+            return super(GameView, self).dispatch(request, *args, **kwargs)
 
         if game.is_available():
             result = game.add_player(user.id)
@@ -101,7 +104,10 @@ class GameView(TemplateView):
 
             # redis_db.set('available_games', pickle.dumps(games))
             redis_db.set(game_id, pickle.dumps(game))
-        return super(GameView, self).dispatch(request, *args, **kwargs)
+
+            return super(GameView, self).dispatch(request, *args, **kwargs)
+        else:
+            return redirect('/lobby/')
 
 
     def get_context_data(self, **kwargs):

@@ -27,6 +27,12 @@ class Game:
             'votes': dict()
         }
 
+    def already_joined(self, player_id):
+        for player in self.players:
+            if player['id'] == player_id:
+                return True
+        return False
+
     def add_player(self, player_id):
         if self.turn_details['stage']=='WAITING_FOR_START':
             if (len(self.players) == self.player_limit):
