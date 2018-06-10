@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'webpack_loader'
+    'webpack_loader',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'dixit.wsgi.application'
+ASGI_APPLICATION = 'dixit.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -171,10 +173,19 @@ REDIS_PORT = int(os.getenv('DIXIT_REDIS_PORT', 6379))
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379',
+        'LOCATION': 'redis://'+REDIS_HOST+":"+str(REDIS_PORT),
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'PICKLE_VERSION': -1
+        },
+    },
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [(REDIS_HOST, REDIS_PORT)],
         },
     },
 }

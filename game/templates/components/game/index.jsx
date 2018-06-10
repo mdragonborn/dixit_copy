@@ -16,7 +16,7 @@ fetch('http://127.0.0.1:8000/current-user/?format=json').then(
   }
 );
 
-fetch('http://127.0.0.1:8000/game/participants/2/?format=json').then(
+fetch('http://127.0.0.1:8000/game/participants/'+game_id+'/?format=json').then(
   response => response.json()
 ).then(
   participants => {
@@ -26,7 +26,7 @@ fetch('http://127.0.0.1:8000/game/participants/2/?format=json').then(
 );
 
 
-var game_sock = 'ws://' + window.location.host + "/game/";
+var game_sock = 'ws://' + window.location.host + "/ws/game/" + game_id + "/";
 // preset the current_user
 
 // renders out the base component
