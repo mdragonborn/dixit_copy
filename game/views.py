@@ -44,7 +44,7 @@ def create_game(request):
             games[str(game.game_id)] = {'free_places': game.player_limit - 1, 'limit': game.player_limit}
 
             redis_db.set('available_games', pickle.dumps(games))
-
+            print(game.game_id, game)
             redis_db.set(game.game_id, pickle.dumps(game))
             return redirect('/game/' + str(game.game_id))
     form = CreateGameForm()

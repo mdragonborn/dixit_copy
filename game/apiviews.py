@@ -18,6 +18,7 @@ class GameParticipantsView(APIView):
         redis_db = redis.StrictRedis(host='localhost', port=6379, db=0)
         print(kwargs['game_id'])
         game =redis_db.get(kwargs['game_id'])
+        print(game)
         if game is not None:
             game =  pickle.loads(game)
             participants = game.get_participants()
