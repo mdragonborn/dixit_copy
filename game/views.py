@@ -41,14 +41,11 @@ def create_game(request):
             games = {}
             if (redis_db.get('available_games') is not None):
                 games = pickle.loads(redis_db.get('available_games'))
-            games[form.cleaned_data['num_of_players']] = {'free_places': game.player_limit - 1, 'limit': game.player_limit}
+            games[str(game.game_id)] = {'free_places': game.player_limit - 1, 'limit': game.player_limit}
 
-            print(games)
             redis_db.set('available_games', pickle.dumps(games))
 
-            print(game.game_id)
             redis_db.set(game.game_id, pickle.dumps(game))
-
             return redirect('/game/' + str(game.game_id))
     form = CreateGameForm()
     return render(request, 'create_game.html', {'form': form})
@@ -64,12 +61,10 @@ class GameView(TemplateView):
     game = None
     game_id = None
 
-    # @method_decorator(login_required)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         redis_db = redis.StrictRedis(host="localhost", port=6379, db=0)
         game_cache = redis_db.get(kwargs['game_id'])
-        print(request.method)
-        print("redis_db", game_cache)
         # if not game_cache:
         #     messages.add_message(request, messages.ERROR, "soz")
         #     return redirect ('/lobby/')
@@ -77,7 +72,6 @@ class GameView(TemplateView):
 
         # with cache._lock(game_id):
         user = get_user(request)
-        print(game_cache)
         game = None
 
         #
@@ -87,7 +81,6 @@ class GameView(TemplateView):
             if(redis_db.get('available_games') is not None):
                 games = pickle.loads(redis_db.get('available_games'))
             games[game_id]={'free_places': game.player_limit-1, 'limit': game.player_limit }
-            print(games)
             redis_db.set('available_games', pickle.dumps(games))
         else:
             game = pickle.loads(game_cache)
@@ -100,7 +93,6 @@ class GameView(TemplateView):
 
             # with cache.lock('available_games'):
             games = pickle.loads(redis_db.get('available_games'))
-            print(games)
             if game.has_started:
                 games.remove(game_id)
             else:
@@ -113,5 +105,10 @@ class GameView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(GameView, self).get_context_data(**kwargs)
-        context['game'] = self.game
+        redis_db = redis.StrictRedis(host="localhost", port=6379, db=0)
+        print(self.game_id)
+        if self.game_id is not None:
+            game = redis_db.get(self.game_id)
+            print(game)
+            context['game'] = pickle.loads(game)
         return context

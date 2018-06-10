@@ -1,3 +1,4 @@
+
 """dixit URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -24,7 +25,7 @@ from game.views import GameView
 from django.conf.urls import url
 from django.conf.urls.static import static
 from dixit import settings
-from game import views
+from game  import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -36,6 +37,7 @@ from profiles import views as profiles_views
 import accounts.urls as accounts_urls
 import profiles.urls as profiles_urls
 import game.views as game_views
+from game.apiviews import CurrentUserView, GameParticipantsView
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
@@ -43,8 +45,9 @@ urlpatterns = [
                   url(r'^game/(?P<game_id>\d+)/$', GameView.as_view()),
                   url(r'^img-api/', include(router.urls)),
                   url(r'^upload/$', views.model_form_upload, name='upload'),
-                  url(r'^img-api/', include('rest_framework.urls', namespace='rest_framework')),
                   url(r'^create_game', game_views.create_game, name='create_game'),
+                  url(r'^current-user/', CurrentUserView.as_view()),
+                  url(r'^game/participants/(?P<game_id>\d+)/$', GameParticipantsView.as_view()),
 
                   # TODO: Use path instead of url.
                   # TODO: Fix this clusterfuck - subdivide urls by app.
