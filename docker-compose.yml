@@ -25,6 +25,8 @@ services:
       - /opt/dixit/node_modules
     ports:
       - "8000:8000"
-    command: bash -c "./wait-for-it.sh db:5432
+    command: bash -c "npm run build
+             && python manage.py collectstatic --noinput
+             && ./wait-for-it.sh db:5432
              && python manage.py migrate
              && python manage.py runserver 0.0.0.0:8000"

@@ -107,7 +107,6 @@ venv.bak/
 # PyCharm
 .idea/
 
-#node
+# Webpack
 webpack-stats.json
-assets/
-static/bundles/
+/static/

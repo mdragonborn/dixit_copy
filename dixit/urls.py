@@ -57,4 +57,4 @@ urlpatterns = [
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # //////// POLICE LINE DO NOT CROSS //////// POLICE LINE DO NOT CROSS ////////
-urlpatterns += static(settings.STATIC_URL, document_root=settings.TEST_DIRECT_STATIC)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

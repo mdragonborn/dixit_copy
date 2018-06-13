@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -81,6 +82,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'dixit.wsgi.application'
 ASGI_APPLICATION = 'dixit.routing.application'
 
+
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -117,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Login settings
+# Login and signup
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
@@ -137,13 +139,9 @@ DEFAULT_FROM_EMAIL = 'Dixit Team <noreply@example.com>'
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -151,21 +149,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'assets'),
 )
-TEST_DIRECT_STATIC = os.path.join(BASE_DIR, 'static')
 
 WEBPACK_LOADER = {
-    'DEFAULT' : {
-        'BUNDLE_DIR_NAME' : '/bundles/',
-        'STATS_FILE' : os.path.join(BASE_DIR, 'webpack-stats.json')
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
     }
 }
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# Redis
 
 REDIS_HOST = os.getenv('DIXIT_REDIS_HOST', 'localhost')
 REDIS_PORT = int(os.getenv('DIXIT_REDIS_PORT', 6379))
@@ -173,7 +173,7 @@ REDIS_PORT = int(os.getenv('DIXIT_REDIS_PORT', 6379))
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://'+REDIS_HOST+":"+str(REDIS_PORT),
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'PICKLE_VERSION': -1

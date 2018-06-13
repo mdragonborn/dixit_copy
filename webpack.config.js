@@ -8,8 +8,8 @@ module.exports = {
     game: './game/templates/components/game/index',
   },
   output: {
-    path: path.resolve('./static/bundles/'),
-    filename: '[name]-[hash].js',
+    path: path.resolve('./assets/bundles/'),
+    filename: '[name].min.js',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
