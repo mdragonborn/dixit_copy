@@ -22,6 +22,7 @@ services:
       - DIXIT_REDIS_HOST=redis
     volumes:
       - .:/opt/dixit
+      - /opt/dixit/node_modules
     ports:
       - "8000:8000"
     command: bash -c "./wait-for-it.sh db:5432
