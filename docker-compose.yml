@@ -21,7 +21,7 @@ services:
       - DIXIT_DB_HOST=db
       - DIXIT_REDIS_HOST=redis
     volumes:
-      - .:/usr/local/dixit
+      - .:/opt/dixit
     ports:
       - "8000:8000"
     command: bash -c "./wait-for-it.sh db:5432
