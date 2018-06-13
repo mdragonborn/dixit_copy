@@ -8,7 +8,7 @@ module.exports = {
     game: './game/templates/components/game/index',
   },
   output: {
-    path: path.resolve('./assets/bundles/'),
+    path: path.resolve('./static/bundles/'),
     filename: '[name].min.js',
   },
   plugins: [
